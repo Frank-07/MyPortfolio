@@ -10,11 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para los íconos de redes sociales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Se cambió a un fondo de gradiente lineal de amarillo pastel a rosa pastel */
-            background: linear-gradient(to bottom right, #fef08a, #f9a8d4);
+            /* Se cambió a un fondo de imagen con un patrón similar al de la referencia */
+            background-image: url('https://placehold.co/1920x1080/fef08a/fef08a?text=');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #fef08a; /* Color de fallback */
             color: #1f2937;
         }
 
@@ -152,12 +158,19 @@
             </div>
         </section>
         
-        <!-- Contact Information -->
+        <!-- Contact Section with social media icons -->
         <div class="text-center mt-12">
-            <p class="text-lg font-semibold text-gray-700">Contact me:</p>
-            <p class="text-lg text-gray-600">
-                <a href="mailto:franco.agnic7@gmail.com" class="text-blue-600 hover:underline">franco.agnic7@gmail.com</a>
-            </p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Contact Me</h2>
+            <div class="flex justify-center space-x-4">
+                <!-- LinkedIn icon -->
+                <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" rel="noopener noreferrer" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fab fa-linkedin-in text-white text-3xl"></i>
+                </a>
+                <!-- Email icon -->
+                <a href="mailto:franco.agnic7@gmail.com" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fas fa-envelope text-white text-3xl"></i>
+                </a>
+            </div>
         </div>
     </div>
 
