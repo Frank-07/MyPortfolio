@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Portfolio</title>
+    <!-- Incluye el CDN de Tailwind CSS para un estilo rápido y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga la fuente "Inter" de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Se cambió a un fondo de gradiente lineal de amarillo pastel a rosa pastel */
+            background: linear-gradient(to bottom right, #fef08a, #f9a8d4);
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <!-- Main container of the page, centered and with a maximum width -->
+    <div class="mx-auto max-w-7xl">
+        <!-- Main title and description -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Game Portfolio</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                A collection of game projects I have worked on. Click on each image to visit the game's page.
+            </p>
+        </header>
+
+        <!-- Game gallery using a responsive grid layout -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Card for the featured game "Don't Kill Rumble" -->
+            <!-- This card is larger and more prominent -->
+            <div class="lg:col-span-3 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/header.jpg?t=1754921990" alt="Image of Don't Kill Rumble" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Don't Kill Rumble</h2>
+                </div>
+            </div>
+
+            <!-- Card for "Junior Solutions" -->
+            <div class="lg:col-span-2 mx-auto bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1460520/header.jpg?t=1676659733" alt="Image of Junior Solutions" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Junior Solutions</h2>
+                </div>
+            </div>
+
+            <!-- Card for the game "Buzzle" -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://ggjv4.s3.us-west-1.amazonaws.com/files/styles/flexslider_full/s3/games/2025/823950/screenshot/UniqueGameplay_0.png?VersionId=WDDPap4NDuwfeWhWoxFvx96wbtSpwOop&itok=h_eC-zEL" alt="Image of Buzzle" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Buzzle</h2>
+                </div>
+            </div>
+
+            <!-- Card for the game "Bingaboll" -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://pablyco.itch.io/bingaboll" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://img.itch.zone/aW1hZ2UvMTc2NjU4OS8xMDM4ODQ1My5wbmc=/original/JqUKjA.png" alt="Image of Bingaboll" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Bingaboll</h2>
+                </div>
+            </div>
+
+            <!-- Card for the YouTube video -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://www.youtube.com/watch?v=YcZpXZbWEjE&t=2s&ab_channel=UEDeivor" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://i.gyazo.com/e7bbd31c575a64998da43019e088615f.png" alt="Image of TheCubeWorld" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">TheCubeWorld</h2>
+                </div>
+            </div>
+
+            <!-- Card for the game "Ritmine" -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://img.itch.zone/aW1hZ2UvMTMzNjA0OS83ODE0NjAzLnBuZw==/original/xWJEOW.png" alt="Image of Ritmine" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Ritmine</h2>
+                </div>
+            </div>
+
+            <!-- Card for the game "Skuishy" -->
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="block">
+                    <img src="https://img.itch.zone/aW1nLzg2MTU5NDMuanBn/original/GbAgcc.jpg" alt="Image of Skuishy" class="w-full h-auto object-cover rounded-t-xl">
+                </a>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">Skuishy</h2>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="text-center mt-12">
+            <p class="text-lg font-semibold text-gray-700">Contact me:</p>
+            <p class="text-lg text-gray-600">
+                <a href="mailto:franco.agnic7@gmail.com" class="text-blue-600 hover:underline">franco.agnic7@gmail.com</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
