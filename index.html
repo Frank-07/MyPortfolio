@@ -41,88 +41,116 @@
             </p>
         </header>
 
-        <!-- Game gallery using a responsive grid layout -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- About Me Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4 text-center">About Me</h2>
+            <div class="max-w-4xl mx-auto relative flex flex-col items-center md:flex-row md:space-x-8">
+                <!-- Large, bold name text positioned behind the main content -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <h1 class="text-8xl md:text-9xl font-extrabold text-gray-900 text-opacity-10 uppercase select-none">
+                        Franco Agnic
+                    </h1>
+                </div>
 
-            <!-- Card for the featured game "Don't Kill Rumble" -->
-            <!-- This card is larger and more prominent -->
-            <div class="lg:col-span-3 rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/header.jpg?t=1754921990" alt="Image of Don't Kill Rumble" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4 text-center">
-                    <h2 class="text-2xl font-bold text-gray-800">Don't Kill Rumble</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Profile image container -->
+                <div class="z-10 w-full md:w-1/3 flex justify-center md:block">
+                    <img src="https://cdn.discordapp.com/attachments/965706985054027826/1420041265168519178/cyberfrankProfile.png?ex=68d3f3fc&is=68d2a27c&hm=e41daf8d52c91476e88218d34e648c0c33ec41055b126a28d2657acb123bec82" alt="Franco Nicolas Agnic profile picture" class="w-64 h-64 object-cover rounded-full shadow-lg">
+                </div>
+
+                <!-- Text box container -->
+                <div class="z-10 w-full md:w-2/3 bg-white bg-opacity-50 p-6 rounded-xl text-gray-900 text-lg mt-8 md:mt-0 card-shadow">
+                    <p class="mb-2 text-xl font-semibold">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
+                    <p>I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
                 </div>
             </div>
+        </section>
 
-            <!-- Card for "Junior Solutions" -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1460520/header.jpg?t=1676659733" alt="Image of Junior Solutions" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4 text-center">
-                    <h2 class="text-2xl font-bold text-gray-800">Junior Solutions</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+        <!-- Projects Section -->
+        <section>
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 text-center">Projects I've Worked On</h2>
+            <!-- Game gallery using a responsive grid layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Card for the featured game "Don't Kill Rumble" -->
+                <!-- This card is larger and more prominent -->
+                <div class="lg:col-span-3 rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/header.jpg?t=1754921990" alt="Image of Don't Kill Rumble" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Don't Kill Rumble</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Card for the game "Buzzle" -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://ggjv4.s3.us-west-1.amazonaws.com/files/styles/flexslider_full/s3/games/2025/823950/screenshot/UniqueGameplay_0.png?VersionId=WDDPap4NDuwfeWhWoxFvx96wbtSpwOop&itok=h_eC-zEL" alt="Image of Buzzle" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4">
-                    <h2 class="text-xl font-bold text-gray-800">Buzzle</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Card for "Junior Solutions" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1460520/header.jpg?t=1676659733" alt="Image of Junior Solutions" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Junior Solutions</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Card for the game "Bingaboll" -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://pablyco.itch.io/bingaboll" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://img.itch.zone/aW1hZ2UvMTc2NjU4OS8xMDM4ODQ1My5wbmc=/original/JqUKjA.png" alt="Image of Bingaboll" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4">
-                    <h2 class="text-xl font-bold text-gray-800">Bingaboll</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Card for the game "Buzzle" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://ggjv4.s3.us-west-1.amazonaws.com/files/styles/flexslider_full/s3/games/2025/823950/screenshot/UniqueGameplay_0.png?VersionId=WDDPap4NDuwfeWhWoxFvx96wbtSpwOop&itok=h_eC-zEL" alt="Image of Buzzle" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Buzzle</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Card for the YouTube video -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://www.youtube.com/watch?v=YcZpXZbWEjE&t=2s&ab_channel=UEDeivor" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://i.gyazo.com/e7bbd31c575a64998da43019e088615f.png" alt="Image of TheCubeWorld" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4">
-                    <h2 class="text-xl font-bold text-gray-800">TheCubeWorld</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Card for the game "Bingaboll" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://pablyco.itch.io/bingaboll" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1hZ2UvMTc2NjU4OS8xMDM4ODQ1My5wbmc=/original/JqUKjA.png" alt="Image of Bingaboll" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Bingaboll</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Card for the game "Ritmine" -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://img.itch.zone/aW1hZ2UvMTMzNjA0OS83ODE0NjAzLnBuZw==/original/xWJEOW.png" alt="Image of Ritmine" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4">
-                    <h2 class="text-xl font-bold text-gray-800">Ritmine</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Card for the YouTube video -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://www.youtube.com/watch?v=YcZpXZbWEjE&t=2s&ab_channel=UEDeivor" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://i.gyazo.com/e7bbd31c575a64998da43019e088615f.png" alt="Image of TheCubeWorld" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">TheCubeWorld</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Card for the game "Skuishy" -->
-            <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="block">
-                    <img src="https://img.itch.zone/aW1nLzg2MTU5NDMuanBn/original/GbAgcc.jpg" alt="Image of Skuishy" class="w-full h-auto object-cover rounded-t-xl">
-                </a>
-                <div class="p-4">
-                    <h2 class="text-xl font-bold text-gray-800">Skuishy</h2>
-                    <p class="text-gray-600">Technical Artist</p>
+                <!-- Card for the game "Ritmine" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1hZ2UvMTMzNjA0OS83ODE0NjAzLnBuZw==/original/xWJEOW.png" alt="Image of Ritmine" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Ritmine</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+                <!-- Card for the game "Skuishy" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1nLzg2MTU5NDMuanBn/original/GbAgcc.jpg" alt="Image of Skuishy" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Skuishy</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
         
         <!-- Contact Information -->
         <div class="text-center mt-12">
