@@ -1,178 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Game Portfolio</title>
-    <!-- Incluye el CDN de Tailwind CSS para un estilo rápido y responsivo -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Carga la fuente "Inter" de Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome para los íconos de redes sociales -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Se cambió a un fondo de imagen con un patrón similar al de la referencia */
-            background-image: url('https://placehold.co/1920x1080/fef08a/fef08a?text=');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: #fef08a; /* Color de fallback */
-            color: #1f2937;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Franco Agnic — Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-        .card-shadow {
-            /* Aumenta la sombra para un contorno más pronunciado */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+  <!-- Base layout styles -->
+  <style>
+    :root { --overlay: rgba(0,0,0,0.45); }
+    html, body { height: 100%; }
+    body { font-family: 'Inter', sans-serif; margin: 0; background:#000; color:#fff; }
+    /* Scroll Snap */
+    .snap-viewport { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    section.snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100vh; position: relative; }
+    /* Section media */
+    .bg-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .bg-media img, .bg-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .shade { position: absolute; inset: 0; background: var(--overlay); z-index: 1; }
+    .content { position: relative; z-index: 2; }
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: .75rem; background: #111827; color: white; font-weight: 600; transition: transform .2s, box-shadow .2s, opacity .2s; box-shadow: 0 10px 20px rgba(0,0,0,.2); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.24); }
+    .thumb { width: 56px; height: 56px; border-radius: .5rem; object-fit: cover; flex: 0 0 56px; }
+    .title { letter-spacing: -0.02em; }
+  </style>
 
-        .hover-shadow:hover {
-            /* Aumenta la sombra al pasar el mouse para un efecto de elevación */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-    </style>
+  <!-- Page-length background + environment layers -->
+  <style>
+    #page-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: background-position; }
+    #page-bg {
+      background-image:
+        linear-gradient(180deg, #0b1b2b 0%, #15293e 30%, #2c3f5c 55%, #5a3d6d 72%, #8b4660 84%, #f27a58 93%, #ffb36b 100%),
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.9) 50%, transparent 51%),
+        radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 40% 22%, rgba(255,255,255,.85) 50%, transparent 51%),
+        radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 85% 35%, rgba(255,255,255,.9) 50%, transparent 51%),
+        radial-gradient(1px 1px at 60% 8%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 15% 55%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,.75) 50%, transparent 51%);
+      background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+      background-size: 100% calc(var(--pages, 10) * 100vh), auto, auto, auto, auto, auto, auto, auto, auto;
+      background-position: center 0%, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+    /* Hide section-specific BG for hero/about so page-bg is visible */
+    #hero .bg-media, #about .bg-media { display: none; }
+
+    /* Environment layers */
+    #env-far, #env-mid, #env-near, #env-trees, #env-fog { position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: transform, opacity; }
+    /* Far mountains */
+    #env-far { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'><path d='M0 320 L120 240 L220 300 L340 210 L470 290 L560 200 L680 290 L820 190 L980 300 L1120 250 L1200 320 L1200 400 L0 400 Z' fill='%23233a53'/></svg>") bottom center / cover no-repeat; opacity:0.6; }
+    /* Mid mountains (darker, closer) */
+    #env-mid { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'><path d='M0 350 L150 250 L300 340 L450 230 L600 320 L750 240 L900 330 L1050 260 L1200 350 L1200 420 L0 420 Z' fill='%23102133'/></svg>") bottom center / cover no-repeat; opacity:0.75; }
+    /* Near trees */
+    #env-near { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'><g fill='%23060f18'><path d='M50 280 l40 -90 l40 90 z'/><path d='M150 280 l30 -70 l30 70 z'/><path d='M230 280 l45 -100 l45 100 z'/><path d='M340 280 l35 -85 l35 85 z'/><path d='M430 280 l50 -115 l50 115 z'/><path d='M560 280 l38 -90 l38 90 z'/><path d='M650 280 l46 -110 l46 110 z'/><path d='M760 280 l34 -80 l34 80 z'/><path d='M840 280 l52 -120 l52 120 z'/><path d='M980 280 l40 -90 l40 90 z'/><path d='M1080 280 l36 -82 l36 82 z'/><rect y='280' width='1200' height='20' fill='%23060f18'/></g></svg>") bottom center / cover no-repeat; opacity:0.95; }
+    /* Foreground extra trees */
+    #env-trees { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 280'><g fill='%2304080f'><path d='M40 260 l35 -85 l35 85 z'/><path d='M120 260 l25 -65 l25 65 z'/><path d='M200 260 l40 -95 l40 95 z'/><path d='M300 260 l30 -75 l30 75 z'/><path d='M380 260 l50 -115 l50 115 z'/><path d='M480 260 l35 -85 l35 85 z'/><path d='M600 260 l45 -105 l45 105 z'/><path d='M700 260 l33 -80 l33 80 z'/><path d='M800 260 l48 -120 l48 120 z'/><path d='M920 260 l38 -92 l38 92 z'/><path d='M1040 260 l34 -84 l34 84 z'/><rect y='260' width='1200' height='20' fill='%2304080f'/></g></svg>") bottom center / cover no-repeat; opacity:1; }
+    /* Fog to blend and ground layers */
+    #env-fog { background: linear-gradient(to top, rgba(20,25,35,0.95) 0%, rgba(20,25,35,0.6) 45%, rgba(20,25,35,0.25) 70%, transparent 100%); mix-blend-mode: screen; }
+      /* Optional: style fallback when video fails */
+    .video-error + .shade { background: rgba(0,0,0,0.65); }
+  </style>
 </head>
-<body class="p-6">
 
-    <!-- Main container of the page, centered and with a maximum width -->
-    <div class="mx-auto max-w-7xl">
-        <!-- Main title and description -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Game Portfolio</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                A collection of game projects I have worked on. Click on each image to visit the game's page.
-            </p>
-        </header>
+<body>
+  <!-- Page-length background and environment layers -->
+  <div id="page-bg" aria-hidden="true"></div>
+  <div id="env-far" aria-hidden="true"></div>
+  <div id="env-mid" aria-hidden="true"></div>
+  <div id="env-near" aria-hidden="true"></div>
+  <div id="env-trees" aria-hidden="true"></div>
+  <div id="env-fog" aria-hidden="true"></div>
 
-        <!-- About Me Section -->
-        <section class="mb-12">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4 text-center">About Me</h2>
-            <div class="max-w-4xl mx-auto relative flex flex-col items-center md:flex-row md:space-x-8">
-                <!-- Large, bold name text positioned behind the main content -->
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <h1 class="text-8xl md:text-9xl font-extrabold text-gray-900 text-opacity-10 uppercase select-none">
-                        Franco Agnic
-                    </h1>
-                </div>
+  <main class="snap-viewport">
 
-                <!-- Profile image container -->
-                <div class="z-10 w-full md:w-1/3 flex justify-center md:block">
-                    <img src="https://cdn.discordapp.com/attachments/965706985054027826/1420041265168519178/cyberfrankProfile.png?ex=68d3f3fc&is=68d2a27c&hm=e41daf8d52c91476e88218d34e648c0c33ec41055b126a28d2657acb123bec82" alt="Franco Nicolas Agnic profile picture" class="w-64 h-64 object-cover rounded-full shadow-lg">
-                </div>
+    <!-- 1) HERO -->
+    <section id="hero" class="snap">
+      <div class="shade"></div>
+      <div class="content h-full flex flex-col items-center justify-center text-center p-6">
+        <h1 class="title text-4xl sm:text-6xl md:text-7xl font-black">Franco Agnic</h1>
+        <p class="mt-4 text-lg sm:text-xl text-gray-200 max-w-2xl">Technical Artist · Unreal Engine · Shaders · VFX · Cinematics</p>
+      </div>
+    </section>
 
-                <!-- Text box container -->
-                <div class="z-10 w-full md:w-2/3 bg-white bg-opacity-50 p-6 rounded-xl text-gray-900 text-lg mt-8 md:mt-0 card-shadow">
-                    <p class="mb-2 text-xl font-semibold">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
-                    <p>I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
-                </div>
-            </div>
-        </section>
+    <!-- 2) ABOUT ME (con imagen y texto centrados) -->
+    <section id="about" class="snap">
+      <div class="shade"></div>
+      <div class="content h-full flex flex-col items-center justify-center text-center p-6">
+        <img src="https://raw.githubusercontent.com/Frank-07/MyPortfolio/main/imagenes/PerfilEdited.png" alt="Profile" class="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl object-cover shadow-2xl mb-6" referrerpolicy="no-referrer" crossorigin="anonymous" loading="eager" decoding="sync" onerror="this.onerror=null; this.src='https://placehold.co/288x288?text=Profile';"/>
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold title">Technical Artist</h2>
+        <p class="mt-4 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
+        <p class="mt-2 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
+      </div>
+    </section>
 
-        <!-- Projects Section -->
-        <section>
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 text-center">Projects I've Worked On</h2>
-            <!-- Game gallery using a responsive grid layout -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- 3) PROJECTS (8 snaps, cada uno con video de fondo y CTA) -->
 
-                <!-- Card for the featured game "Don't Kill Rumble" -->
-                <!-- This card is larger and more prominent -->
-                <div class="lg:col-span-3 rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/header.jpg?t=1754921990" alt="Image of Don't Kill Rumble" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4 text-center">
-                        <h2 class="text-2xl font-bold text-gray-800">Don't Kill Rumble</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for "Junior Solutions" -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1460520/header.jpg?t=1676659733" alt="Image of Junior Solutions" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4 text-center">
-                        <h2 class="text-2xl font-bold text-gray-800">Junior Solutions</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for the game "Buzzle" -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://ggjv4.s3.us-west-1.amazonaws.com/files/styles/flexslider_full/s3/games/2025/823950/screenshot/UniqueGameplay_0.png?VersionId=WDDPap4NDuwfeWhWoxFvx96wbtSpwOop&itok=h_eC-zEL" alt="Image of Buzzle" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold text-gray-800">Buzzle</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for the game "Bingaboll" -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://pablyco.itch.io/bingaboll" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://img.itch.zone/aW1hZ2UvMTc2NjU4OS8xMDM4ODQ1My5wbmc=/original/JqUKjA.png" alt="Image of Bingaboll" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold text-gray-800">Bingaboll</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for the YouTube video -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://www.youtube.com/watch?v=YcZpXZbWEjE&t=2s&ab_channel=UEDeivor" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://i.gyazo.com/e7bbd31c575a64998da43019e088615f.png" alt="Image of TheCubeWorld" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold text-gray-800">TheCubeWorld</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for the game "Ritmine" -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://img.itch.zone/aW1hZ2UvMTMzNjA0OS83ODE0NjAzLnBuZw==/original/xWJEOW.png" alt="Image of Ritmine" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold text-gray-800">Ritmine</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-                <!-- Card for the game "Skuishy" -->
-                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
-                    <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="block">
-                        <img src="https://img.itch.zone/aW1nLzg2MTU5NDMuanBn/original/GbAgcc.jpg" alt="Image of Skuishy" class="w-full h-auto object-cover rounded-t-xl">
-                    </a>
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold text-gray-800">Skuishy</h2>
-                        <p class="text-gray-600">Technical Artist</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-        
-        <!-- Contact Section with social media icons -->
-        <div class="text-center mt-12">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Contact Me</h2>
-            <div class="flex justify-center space-x-4">
-                <!-- LinkedIn icon -->
-                <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" rel="noopener noreferrer" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-                    <i class="fab fa-linkedin-in text-white text-3xl"></i>
-                </a>
-                <!-- Email icon -->
-                <a href="mailto:franco.agnic7@gmail.com" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-                    <i class="fas fa-envelope text-white text-3xl"></i>
-                </a>
-            </div>
+    <!-- Project 1 -->
+    <section class="snap project" data-project="1">
+      <div class="bg-media flex items-center justify-center px-6">
+        <!-- Embed YouTube video with margin on sides -->
+        <iframe class="w-full h-5/6 max-w-5xl rounded-xl" src="https://www.youtube.com/embed/2EGC1s9mBOI?autoplay=1&mute=1&loop=1&playlist=2EGC1s9mBOI" title="Don't Kill Rumble Trailer" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Don't Kill Rumble</h3>
+          <p class="mt-4 text-gray-100">Breve descripción del proyecto, mecánicas, tecnologías y un highlight de tu contribución.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/capsule_184x69.jpg" alt="Miniatura Don't Kill Rumble" />
+            Ver proyecto
+          </a>
         </div>
-    </div>
+      </div>
+    </section>
 
+    <!-- Project 2 -->
+    <section class="snap project" data-project="2">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 2 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve del proyecto 2. Qué hiciste, tecnología usada, impacto.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 3 -->
+    <section class="snap project" data-project="3">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto3.mp4" poster="/posters/proyecto3.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 3 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 3.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto3.jpg" alt="Miniatura proyecto 3" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 4 -->
+    <section class="snap project" data-project="4">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto4.mp4" poster="/posters/proyecto4.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 4 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 4.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto4.jpg" alt="Miniatura proyecto 4" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 5 -->
+    <section class="snap project" data-project="5">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto5.mp4" poster="/posters/proyecto5.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 5 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 5.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto5.jpg" alt="Miniatura proyecto 5" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 6 -->
+    <section class="snap project" data-project="6">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto6.mp4" poster="/posters/proyecto6.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 6 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 6.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto6.jpg" alt="Miniatura proyecto 6" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 7 -->
+    <section class="snap project" data-project="7">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto7.mp4" poster="/posters/proyecto7.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 7 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 7.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto7.jpg" alt="Miniatura proyecto 7" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 8 -->
+    <section class="snap project" data-project="8">
+      <div class="bg-media">
+        <video class="project-video" src="/videos/proyecto8.mp4" poster="/posters/proyecto8.jpg" autoplay muted loop playsinline preload="none"></video>
+      </div>
+      <div class="shade"></div>
+      <div class="content h-full grid place-items-center p-6">
+        <div class="max-w-4xl w-full text-center md:text-left">
+          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 8 — Nombre del juego</h3>
+          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 8.</p>
+          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
+            <img class="thumb" src="/thumbs/proyecto8.jpg" alt="Miniatura proyecto 8" />
+            Ver proyecto
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Behavior scripts: page background progression + project video play/pause -->
+  <script>
+    (function(){
+      const viewport = document.querySelector('.snap-viewport');
+      const pageBg = document.getElementById('page-bg');
+      const setPages = () => {
+        const snaps = document.querySelectorAll('section.snap');
+        pageBg.style.setProperty('--pages', snaps.length.toString());
+      };
+      setPages();
+      const update = () => {
+        const max = viewport.scrollHeight - viewport.clientHeight;
+        const t = max > 0 ? viewport.scrollTop / max : 0;
+        const y = Math.round(t * 100);
+        pageBg.style.backgroundPosition = `center ${y}%`;
+        const par = y / 100;
+        const far = document.getElementById('env-far');
+        const mid = document.getElementById('env-mid');
+        const near = document.getElementById('env-near');
+        const trees = document.getElementById('env-trees');
+        if (far) far.style.transform = `translateY(${(-6 * par)}vh)`;
+        if (mid) mid.style.transform = `translateY(${(-10 * par)}vh)`;
+        if (near) near.style.transform = `translateY(${(-14 * par)}vh)`;
+        if (trees) trees.style.transform = `translateY(${(-18 * par)}vh)`;
+      };
+      viewport.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+
+      // Play/pause project background videos depending on visibility
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const vid = entry.target.querySelector('video');
+          if (!vid) return;
+          const ensureAttrs = () => { try { vid.muted = true; vid.setAttribute('muted',''); vid.setAttribute('playsinline',''); vid.setAttribute('webkit-playsinline',''); } catch(e){} };
+          if (entry.isIntersecting) {
+            ensureAttrs();
+            // Nudge load before play for some browsers
+            if (vid.readyState < 2) { try { vid.load(); } catch(e){} }
+            const tryPlay = () => vid.play().catch(() => {
+              // Try switching source order (webm) if mp4 fails
+              const sources = vid.querySelectorAll('source');
+              if (sources.length > 1) {
+                vid.pause();
+                const first = sources[0].src; sources[0].src = sources[1].src; sources[1].src = first;
+                try { vid.load(); vid.play().catch(()=>{}); } catch(e){}
+              }
+            });
+            tryPlay();
+          } else {
+            try { vid.pause(); } catch(e){}
+          }
+        });
+      }, { root: viewport, threshold: 0.45 });
+      document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
+    })();
+  </script>
 </body>
 </html>
