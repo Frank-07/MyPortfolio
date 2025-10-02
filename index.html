@@ -124,12 +124,22 @@
     <section class="snap project" data-project="1">
       <div class="shade"></div>
       <div class="content h-full p-6 flex items-center">
-        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <!-- Left: logo, description, role -->
-          <div class="text-center md:text-left">
-            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logo.png?raw=true" alt="Don't Kill Rumble Logo" class="mx-auto md:mx-0 max-h-24 md:max-h-28 object-contain mb-4"/>
-            <p class="text-gray-100">Breve descripción del proyecto, mecánicas, tecnologías y un highlight de tu contribución.</p>
-            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          <div class="text-left">
+            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logo.png?raw=true" alt="Don't Kill Rumble Logo" class="max-h-32 md:max-h-40 object-contain mb-6"/>
+            <div class="text-gray-100 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p>I participated for three years in the development of DKR, a multiplayer party game King of the Hill. I assumed a multifaceted role in production, excelling in level and environment design.</p>
+              <p><strong>Key responsibilities included:</strong></p>
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Level and Environment Design:</strong> Full creation of all game levels and scenarios.</li>
+                <li><strong>Gameplay Prototyping:</strong> Conceptualization and initial implementation of several gameplay mechanics.</li>
+                <li><strong>Technical Art and Graphic Assets:</strong> Development of cinematics, 3D models, textures, materials, and shaders.</li>
+                <li><strong>Graphics Optimization:</strong> Implementation of major improvements to ensure optimal visual and technical performance.</li>
+              </ul>
+              <p>This experience provided me with solid knowledge in multiplayer game development.</p>
+              <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Role: <span class="font-semibold">Technical Artist</span></p>
+            </div>
           </div>
           <!-- Right: video + full-width button below -->
           <div class="w-full md:pl-4 flex flex-col items-center">
@@ -149,131 +159,193 @@
 
     <!-- PROJECTS 2-8: template with video bg, role, button -->
     <section class="snap project" data-project="2">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 2 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve del proyecto 2. Qué hiciste, tecnología usada, impacto.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 2 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 2. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <!-- PROJECTS 3-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
+      <div class="shade"></div>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 3 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 3. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap project" data-project="3">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto3.mp4" poster="/posters/proyecto3.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
+    <!-- PROJECTS 4-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 3 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 3.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto3.jpg" alt="Miniatura proyecto 3" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 4 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 4. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap project" data-project="4">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto4.mp4" poster="/posters/proyecto4.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
+    <!-- PROJECTS 5-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 4 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 4.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto4.jpg" alt="Miniatura proyecto 4" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 5 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 5. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap project" data-project="5">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto5.mp4" poster="/posters/proyecto5.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
+    <!-- PROJECTS 6-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 5 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 5.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto5.jpg" alt="Miniatura proyecto 5" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 6 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 6. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap project" data-project="6">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto6.mp4" poster="/posters/proyecto6.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
+    <!-- PROJECTS 7-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 6 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 6.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto6.jpg" alt="Miniatura proyecto 6" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 7 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 7. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap project" data-project="7">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto7.mp4" poster="/posters/proyecto7.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
+    <!-- PROJECTS 8-8: template with video bg, role, button -->
+     <section class="snap project" data-project="2">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 7 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 7.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto7.jpg" alt="Miniatura proyecto 7" />
-            Ver proyecto
-          </a>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: title, description, role -->
+          <div class="text-center md:text-left">
+            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 8 — Nombre del juego</h3>
+            <p class="mt-4 text-gray-100">Descripción breve del proyecto 8. Qué hiciste, tecnología usada, impacto.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto2.jpg" alt="Miniatura proyecto 2" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
-
-    <section class="snap project" data-project="8">
-      <div class="bg-media">
-        <video class="project-video" src="/videos/proyecto8.mp4" poster="/posters/proyecto8.jpg" autoplay muted loop playsinline preload="none"></video>
-      </div>
-      <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 8 — Nombre del juego</h3>
-          <p class="mt-4 text-gray-100">Descripción breve para el proyecto 8.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="/thumbs/proyecto8.jpg" alt="Miniatura proyecto 8" />
-            Ver proyecto
-          </a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- Behavior scripts -->
