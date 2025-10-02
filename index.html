@@ -40,7 +40,7 @@
     .profile-glow { animation: glowPulse 4s ease-in-out infinite; border-radius: 1rem; }
 
     /* Page-length background + environment layers */
-    #page-bg { position: fixed; inset: 0; z-index: -3; pointer-events: none; will-change: background-position; }
+    #page-bg { position: fixed; inset: 0; z-index: -7; pointer-events: none; will-change: background-position; }
     #page-bg {
       background-image:
         linear-gradient(180deg, #0b1b2b 0%, #15293e 30%, #2c3f5c 55%, #5a3d6d 72%, #8b4660 84%, #f27a58 93%, #ffb36b 100%),
@@ -58,21 +58,65 @@
     }
 
     /* Environment parallax layers */
-    #env-far, #env-mid, #env-near, #env-trees, #env-fog { position: fixed; inset: 0; z-index: -2; pointer-events: none; will-change: transform, opacity; }
+    #env-far, #env-mid, #env-near, #env-trees, #env-fog, #ground-fill { position: fixed; inset: 0; z-index: -2; pointer-events: none; will-change: transform, opacity; }
     #env-far { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'><path d='M0 320 L120 240 L220 300 L340 210 L470 290 L560 200 L680 290 L820 190 L980 300 L1120 250 L1200 320 L1200 400 L0 400 Z' fill='%23233a53'/></svg>") bottom center / cover no-repeat; opacity:0.6; }
     #env-mid { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'><path d='M0 350 L150 250 L300 340 L450 230 L600 320 L750 240 L900 330 L1050 260 L1200 350 L1200 420 L0 420 Z' fill='%23102133'/></svg>") bottom center / cover no-repeat; opacity:0.75; }
     #env-near { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'><g fill='%23060f18'><path d='M50 280 l40 -90 l40 90 z'/><path d='M150 280 l30 -70 l30 70 z'/><path d='M230 280 l45 -100 l45 100 z'/><path d='M340 280 l35 -85 l35 85 z'/><path d='M430 280 l50 -115 l50 115 z'/><path d='M560 280 l38 -90 l38 90 z'/><path d='M650 280 l46 -110 l46 110 z'/><path d='M760 280 l34 -80 l34 80 z'/><path d='M840 280 l52 -120 l52 120 z'/><path d='M980 280 l40 -90 l40 90 z'/><path d='M1080 280 l36 -82 l36 82 z'/><rect y='280' width='1200' height='20' fill='%23060f18'/></g></svg>") bottom center / cover no-repeat; opacity:0.95; }
     #env-trees { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 280'><g fill='%2304080f'><path d='M40 260 l35 -85 l35 85 z'/><path d='M120 260 l25 -65 l25 65 z'/><path d='M200 260 l40 -95 l40 95 z'/><path d='M300 260 l30 -75 l30 75 z'/><path d='M380 260 l50 -115 l50 115 z'/><path d='M480 260 l35 -85 l35 85 z'/><path d='M600 260 l45 -105 l45 105 z'/><path d='M700 260 l33 -80 l33 80 z'/><path d='M800 260 l48 -120 l48 120 z'/><path d='M920 260 l38 -92 l38 92 z'/><path d='M1040 260 l34 -84 l34 84 z'/><rect y='260' width='1200' height='20' fill='%2304080f'/></g></svg>") bottom center / cover no-repeat; opacity:1; }
     #env-fog { background: linear-gradient(to top, rgba(20,25,35,0.95) 0%, rgba(20,25,35,0.6) 45%, rgba(20,25,35,0.25) 70%, transparent 100%); mix-blend-mode: screen; z-index: -1; }
+    /* Foreground ground fill to avoid floating at bottom */
+    #ground-fill { background: linear-gradient(to top, #060b12 0%, #08101a 60%, transparent 100%); mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 12vh, rgba(0,0,0,0) 22vh); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 12vh, rgba(0,0,0,0) 22vh); }
 
     /* Hide hero/about bg layers so page-bg shows */
     #hero .bg-media, #about .bg-media { display: none; }
+    /* Day clouds */
+    #clouds { z-index: -5; opacity: .85; background-image:
+      radial-gradient(60px 35px at 10% 15%, rgba(255,255,255,.25) 40%, transparent 60%),
+      radial-gradient(80px 45px at 18% 22%, rgba(255,255,255,.22) 40%, transparent 60%),
+      radial-gradient(50px 30px at 30% 10%, rgba(255,255,255,.2) 40%, transparent 60%),
+      radial-gradient(70px 40px at 52% 18%, rgba(255,255,255,.24) 40%, transparent 60%),
+      radial-gradient(90px 50px at 70% 12%, rgba(255,255,255,.2) 40%, transparent 60%),
+      radial-gradient(60px 35px at 80% 20%, rgba(255,255,255,.22) 40%, transparent 60%),
+      radial-gradient(50px 30px at 92% 16%, rgba(255,255,255,.2) 40%, transparent 60%);
+      filter: blur(2px); transition: opacity .2s linear, transform .2s linear; }
 
     /* Contact toggle panel */
     #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity:0; }
     #contact-bar.active { transform: translateY(0); opacity:1; }
     #contact-toggle { top: 1rem; left: 1rem; }
-  </style>
+      /* === Day-to-Night Sky Additions === */
+    #sky-day, #sky-night, #stars, #stars2, #clouds, #sun { position: fixed; inset: 0; pointer-events: none; }
+    #sky-day { z-index: -6; background: linear-gradient(180deg, /* midday blue */ #2fa0ff 0%, #37a6ff 20%, #49b5ff 35%, /* start warm */ #ff7a1c 58%, /* strong orange */ #ff5e00 68%, /* deep pink */ #ff3f6a 80%, /* soft peach */ #ffc0a8 100%); opacity: 1; transition: opacity .2s linear; }
+    #sky-night { z-index: -6; background: linear-gradient(180deg, /* violet night */ #4b3aa6 0%, #3b3794 30%, #2a357f 60%, #1a2c66 85%, #0f224f 100%); opacity: 0; transition: opacity .2s linear; }
+    #stars { z-index: -4; background-image:
+      radial-gradient(0.8px 0.8px at 10% 15%, rgba(255,255,255,.95) 50%, transparent 51%),
+      radial-gradient(0.7px 0.7px at 12% 65%, rgba(255,255,255,.85) 50%, transparent 51%),
+      radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,.9) 50%, transparent 51%),
+      radial-gradient(0.6px 0.6px at 33% 12%, rgba(255,255,255,.8) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 40% 22%, rgba(255,255,255,.85) 50%, transparent 51%),
+      radial-gradient(0.9px 0.9px at 52% 48%, rgba(255,255,255,.9) 50%, transparent 51%),
+      radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,.85) 50%, transparent 51%),
+      radial-gradient(0.8px 0.8px at 75% 72%, rgba(255,255,255,.8) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 85% 35%, rgba(255,255,255,.95) 50%, transparent 51%),
+      radial-gradient(0.7px 0.7px at 90% 62%, rgba(255,255,255,.7) 50%, transparent 51%),
+      radial-gradient(0.9px 0.9px at 60% 8%, rgba(255,255,255,.8) 50%, transparent 51%),
+      radial-gradient(0.8px 0.8px at 15% 55%, rgba(255,255,255,.8) 50%, transparent 51%),
+      radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,.85) 50%, transparent 51%);
+      background-repeat: repeat; opacity: 0; transition: opacity .2s linear; }
+    /* larger stars layer for variety */
+    #stars2 { z-index: -3; background-image:
+      radial-gradient(2px 2px at 22% 12%, rgba(255,255,255,.9) 50%, transparent 51%),
+      radial-gradient(1.8px 1.8px at 48% 28%, rgba(255,255,240,.9) 50%, transparent 51%),
+      radial-gradient(2.2px 2.2px at 66% 44%, rgba(230,240,255,.9) 50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 78% 66%, rgba(255,255,255,.85) 50%, transparent 51%),
+      radial-gradient(2px 2px at 30% 72%, rgba(255,250,240,.9) 50%, transparent 51%);
+      background-repeat: repeat; opacity: 0; transition: opacity .2s linear; }
+    #sun { z-index: -2; display: flex; align-items: center; justify-content: center; }
+    #sun::before { content: ""; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #fff6a0 0%, #ffd25e 40%, rgba(255,210,94,0.9) 60%, rgba(255,210,94,0.0) 78%); filter: blur(0.5px); box-shadow: 0 0 80px rgba(255,210,94,0.6), 0 0 140px rgba(255,180,60,0.45); transform: translateY(0); transition: transform .2s linear, opacity .2s linear; }
+    /* Subtle moving gradient to tint environment across the page height */
+    #page-bg { background-image: linear-gradient(180deg, #2fa0ff 0%, #3aaaff 20%, #4cb9ff 40%, #ff7a1c 59%, #ff4e1a 68%, #ff3f6a 80%, #a067ff 100%); background-repeat: no-repeat; background-size: 100% calc(var(--pages, 10) * 100vh); background-position: center 0%; }
+
+</style>
 </head>
 
 <body>
@@ -87,7 +131,14 @@
   </header>
 
   <!-- Page-length background & parallax environment -->
+  <div id="sky-day" aria-hidden="true"></div>
+  <div id="sky-night" aria-hidden="true"></div>
+  <div id="clouds" aria-hidden="true"></div>
+  <div id="stars" aria-hidden="true"></div>
+  <div id="stars2" aria-hidden="true"></div>
+  <div id="sun" aria-hidden="true"></div>
   <div id="page-bg" aria-hidden="true"></div>
+  <div id="ground-fill" aria-hidden="true"></div>
   <div id="env-far" aria-hidden="true"></div>
   <div id="env-mid" aria-hidden="true"></div>
   <div id="env-near" aria-hidden="true"></div>
@@ -220,18 +271,22 @@
       <div class="content h-full p-6 flex items-center">
         <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <div class="text-left">
-            <h3 class="title text-3xl sm:text-4xl font-bold">Proyecto 4 — Nombre del juego</h3>
-            <p class="mt-4 text-gray-100">Descripción breve del proyecto 4. Qué hiciste, tecnología usada, impacto.</p>
-            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logoBuzzle.png?raw=true" alt="Buzzle Logo" class="max-h-32 md:max-h-40 object-contain mb-6 block" style="margin-left:0;"/>
+            <div class="text-gray-100 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p>My role in this intense development cycle focused on creating the core gameplay experience and key technical interactions:</p>
+              <p><strong>Level and Environment Design:</strong> I was responsible for Level Design and Environment Design, creating functional puzzles and environments that were visually coherent with the theme.</p>
+              <p><strong>Technical Gameplay Prototyping:</strong> I led the prototyping of the core mechanic. This included implementing and fine-tuning the physics and interactions of the bubble with various surrounding objects.</p>
+              <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+            </div>
           </div>
           <div class="w-full md:pl-4 flex flex-col items-center">
             <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
               <div class="relative" style="padding-top:56.25%;">
-                <video class="absolute inset-0 w-full h-full object-cover" src="/videos/proyecto4.mp4" poster="/posters/proyecto4.jpg" autoplay muted loop playsinline preload="none"></video>
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/WuEmxzxZrkc?autoplay=1&mute=1&loop=1&playlist=WuEmxzxZrkc" title="Buzzle Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
-              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto4.jpg" alt="Miniatura proyecto 4" />
+            <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="/thumbs/proyecto4.jpg" alt="Buzzle Header" />
               <span class="text-center">View Project</span>
             </a>
           </div>
@@ -361,18 +416,73 @@
       setPages();
       const updateBg = () => {
         const max = viewport.scrollHeight - viewport.clientHeight;
-        const t = max > 0 ? (viewport === window ? window.scrollY : viewport.scrollTop) / max : 0;
+        const scrollPos = (viewport === window ? window.scrollY : viewport.scrollTop);
+        const t = max > 0 ? scrollPos / max : 0; // 0 = day (top), 1 = night (bottom)
+
+        // Move the gradient subtly
         const y = Math.round(t * 100);
         pageBg.style.backgroundPosition = `center ${y}%`;
-        const par = y / 100; // parallax
+
+        // Elements
+        const skyDay = document.getElementById('sky-day');
+        const skyNight = document.getElementById('sky-night');
+        const stars = document.getElementById('stars');
+        const stars2 = document.getElementById('stars2');
+        const clouds = document.getElementById('clouds');
+        const sun = document.getElementById('sun');
+        const envFog = document.getElementById('env-fog');
+
+        // Crossfade day/night
+        if (skyDay) skyDay.style.opacity = String(1 - t);
+        if (skyNight) skyNight.style.opacity = String(t);
+
+        // More stars at night (two layers, different sizes)
+        const starSmall = Math.max(0, (t - 0.25) / 0.75);
+        const starBig = Math.max(0, (t - 0.45) / 0.55);
+        if (stars) stars.style.opacity = String(starSmall);
+        if (stars2) stars2.style.opacity = String(starBig);
+
+        // Sun movement & fade
+        if (sun) {
+          const vh = window.innerHeight;
+          const startY = -0.18 * vh;  // noon slightly above center
+          const endY = 0.58 * vh;     // near horizon
+          const sunY = startY + (endY - startY) * t;
+          // Peak glow around sunset (t≈0.6)
+          const peak = 0.6; const glow = Math.max(0, 1 - Math.abs(t - peak) / 0.6);
+          sun.style.transform = `translateY(${sunY}px)`;
+          sun.style.opacity = String(Math.min(1, glow + 0.15) * (1 - t*0.6));
+        }
+
+        // Clouds: visible by day, fade out by night, slight parallax
+        if (clouds) {
+          clouds.style.opacity = String(Math.max(0, 0.9 * (1 - t)));
+          clouds.style.transform = `translateY(${(-4 * t)}vh) translateX(${(t * 6)}vw)`;
+        }
+
+        // Fog: tint with orange/pink around sunset and darken by night
+        if (envFog) {
+          const sunsetPeak = Math.max(0, 1 - Math.abs(t - 0.6) / 0.6); // 0..1
+          const o1 = (1.0 * sunsetPeak).toFixed(3); // bottom orange intensified
+          const o2 = (0.85 * sunsetPeak).toFixed(3); // mid pink intensified
+          const dark = (0.25 + 0.45 * t).toFixed(3); // upper darkening
+          envFog.style.background = `linear-gradient(to top,
+            rgba(255,120,40, ${o1}) 0%,
+            rgba(255,90,160, ${o2}) 35%,
+            rgba(20,25,35, ${dark}) 70%,
+            transparent 100%)`;
+        }
+
+        // Parallax environment layers (reduced to avoid floating)
+        const par = y / 100;
         const far = document.getElementById('env-far');
         const mid = document.getElementById('env-mid');
         const near = document.getElementById('env-near');
         const trees = document.getElementById('env-trees');
-        if (far) far.style.transform = `translateY(${(-6 * par)}vh)`;
-        if (mid) mid.style.transform = `translateY(${(-10 * par)}vh)`;
-        if (near) near.style.transform = `translateY(${(-14 * par)}vh)`;
-        if (trees) trees.style.transform = `translateY(${(-18 * par)}vh)`;
+        if (far) far.style.transform = `translateY(${(-4 * par)}vh)`;
+        if (mid) mid.style.transform = `translateY(${(-7 * par)}vh)`;
+        if (near) near.style.transform = `translateY(${(-10 * par)}vh)`;
+        if (trees) trees.style.transform = `translateY(${(-12 * par)}vh)`;
       };
       (viewport === window ? window : viewport).addEventListener('scroll', updateBg, { passive: true });
       window.addEventListener('resize', updateBg);
