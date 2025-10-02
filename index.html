@@ -5,33 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Franco Agnic — Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
 
-  <!-- Base layout styles -->
+  <!-- Base styles -->
   <style>
     :root { --overlay: rgba(0,0,0,0.45); }
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; margin: 0; background:#000; color:#fff; }
-    /* Scroll Snap */
+
+    /* Scroll Snap viewport */
     .snap-viewport { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
     section.snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100vh; position: relative; }
-    /* Section media */
+
+    /* Section layering */
     .bg-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-    .bg-media img, .bg-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bg-media img, .bg-media video, .bg-media iframe { width: 100%; height: 100%; object-fit: cover; display: block; }
     .shade { position: absolute; inset: 0; background: var(--overlay); z-index: 1; }
     .content { position: relative; z-index: 2; }
+
     /* Buttons */
     .btn { display: inline-flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: .75rem; background: #111827; color: white; font-weight: 600; transition: transform .2s, box-shadow .2s, opacity .2s; box-shadow: 0 10px 20px rgba(0,0,0,.2); }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.24); }
     .thumb { width: 56px; height: 56px; border-radius: .5rem; object-fit: cover; flex: 0 0 56px; }
     .title { letter-spacing: -0.02em; }
-  </style>
 
-  <!-- Page-length background + environment layers -->
-  <style>
-    #page-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: background-position; }
+    /* Profile glow */
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.3); }
+      50% { box-shadow: 0 0 20px rgba(0,255,255,0.7), 0 0 40px rgba(0,255,255,0.5); }
+      100% { box-shadow: 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.3); }
+    }
+    .profile-glow { animation: glowPulse 4s ease-in-out infinite; border-radius: 1rem; }
+
+    /* Page-length background + environment layers */
+    #page-bg { position: fixed; inset: 0; z-index: -3; pointer-events: none; will-change: background-position; }
     #page-bg {
       background-image:
         linear-gradient(180deg, #0b1b2b 0%, #15293e 30%, #2c3f5c 55%, #5a3d6d 72%, #8b4660 84%, #f27a58 93%, #ffb36b 100%),
@@ -47,28 +56,37 @@
       background-size: 100% calc(var(--pages, 10) * 100vh), auto, auto, auto, auto, auto, auto, auto, auto;
       background-position: center 0%, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
     }
-    /* Hide section-specific BG for hero/about so page-bg is visible */
+
+    /* Environment parallax layers */
+    #env-far, #env-mid, #env-near, #env-trees, #env-fog { position: fixed; inset: 0; z-index: -2; pointer-events: none; will-change: transform, opacity; }
+    #env-far { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'><path d='M0 320 L120 240 L220 300 L340 210 L470 290 L560 200 L680 290 L820 190 L980 300 L1120 250 L1200 320 L1200 400 L0 400 Z' fill='%23233a53'/></svg>") bottom center / cover no-repeat; opacity:0.6; }
+    #env-mid { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'><path d='M0 350 L150 250 L300 340 L450 230 L600 320 L750 240 L900 330 L1050 260 L1200 350 L1200 420 L0 420 Z' fill='%23102133'/></svg>") bottom center / cover no-repeat; opacity:0.75; }
+    #env-near { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'><g fill='%23060f18'><path d='M50 280 l40 -90 l40 90 z'/><path d='M150 280 l30 -70 l30 70 z'/><path d='M230 280 l45 -100 l45 100 z'/><path d='M340 280 l35 -85 l35 85 z'/><path d='M430 280 l50 -115 l50 115 z'/><path d='M560 280 l38 -90 l38 90 z'/><path d='M650 280 l46 -110 l46 110 z'/><path d='M760 280 l34 -80 l34 80 z'/><path d='M840 280 l52 -120 l52 120 z'/><path d='M980 280 l40 -90 l40 90 z'/><path d='M1080 280 l36 -82 l36 82 z'/><rect y='280' width='1200' height='20' fill='%23060f18'/></g></svg>") bottom center / cover no-repeat; opacity:0.95; }
+    #env-trees { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 280'><g fill='%2304080f'><path d='M40 260 l35 -85 l35 85 z'/><path d='M120 260 l25 -65 l25 65 z'/><path d='M200 260 l40 -95 l40 95 z'/><path d='M300 260 l30 -75 l30 75 z'/><path d='M380 260 l50 -115 l50 115 z'/><path d='M480 260 l35 -85 l35 85 z'/><path d='M600 260 l45 -105 l45 105 z'/><path d='M700 260 l33 -80 l33 80 z'/><path d='M800 260 l48 -120 l48 120 z'/><path d='M920 260 l38 -92 l38 92 z'/><path d='M1040 260 l34 -84 l34 84 z'/><rect y='260' width='1200' height='20' fill='%2304080f'/></g></svg>") bottom center / cover no-repeat; opacity:1; }
+    #env-fog { background: linear-gradient(to top, rgba(20,25,35,0.95) 0%, rgba(20,25,35,0.6) 45%, rgba(20,25,35,0.25) 70%, transparent 100%); mix-blend-mode: screen; z-index: -1; }
+
+    /* Hide hero/about bg layers so page-bg shows */
     #hero .bg-media, #about .bg-media { display: none; }
 
-    /* Environment layers */
-    #env-far, #env-mid, #env-near, #env-trees, #env-fog { position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: transform, opacity; }
-    /* Far mountains */
-    #env-far { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'><path d='M0 320 L120 240 L220 300 L340 210 L470 290 L560 200 L680 290 L820 190 L980 300 L1120 250 L1200 320 L1200 400 L0 400 Z' fill='%23233a53'/></svg>") bottom center / cover no-repeat; opacity:0.6; }
-    /* Mid mountains (darker, closer) */
-    #env-mid { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'><path d='M0 350 L150 250 L300 340 L450 230 L600 320 L750 240 L900 330 L1050 260 L1200 350 L1200 420 L0 420 Z' fill='%23102133'/></svg>") bottom center / cover no-repeat; opacity:0.75; }
-    /* Near trees */
-    #env-near { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'><g fill='%23060f18'><path d='M50 280 l40 -90 l40 90 z'/><path d='M150 280 l30 -70 l30 70 z'/><path d='M230 280 l45 -100 l45 100 z'/><path d='M340 280 l35 -85 l35 85 z'/><path d='M430 280 l50 -115 l50 115 z'/><path d='M560 280 l38 -90 l38 90 z'/><path d='M650 280 l46 -110 l46 110 z'/><path d='M760 280 l34 -80 l34 80 z'/><path d='M840 280 l52 -120 l52 120 z'/><path d='M980 280 l40 -90 l40 90 z'/><path d='M1080 280 l36 -82 l36 82 z'/><rect y='280' width='1200' height='20' fill='%23060f18'/></g></svg>") bottom center / cover no-repeat; opacity:0.95; }
-    /* Foreground extra trees */
-    #env-trees { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 280'><g fill='%2304080f'><path d='M40 260 l35 -85 l35 85 z'/><path d='M120 260 l25 -65 l25 65 z'/><path d='M200 260 l40 -95 l40 95 z'/><path d='M300 260 l30 -75 l30 75 z'/><path d='M380 260 l50 -115 l50 115 z'/><path d='M480 260 l35 -85 l35 85 z'/><path d='M600 260 l45 -105 l45 105 z'/><path d='M700 260 l33 -80 l33 80 z'/><path d='M800 260 l48 -120 l48 120 z'/><path d='M920 260 l38 -92 l38 92 z'/><path d='M1040 260 l34 -84 l34 84 z'/><rect y='260' width='1200' height='20' fill='%2304080f'/></g></svg>") bottom center / cover no-repeat; opacity:1; }
-    /* Fog to blend and ground layers */
-    #env-fog { background: linear-gradient(to top, rgba(20,25,35,0.95) 0%, rgba(20,25,35,0.6) 45%, rgba(20,25,35,0.25) 70%, transparent 100%); mix-blend-mode: screen; }
-      /* Optional: style fallback when video fails */
-    .video-error + .shade { background: rgba(0,0,0,0.65); }
+    /* Contact toggle panel */
+    #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity:0; }
+    #contact-bar.active { transform: translateY(0); opacity:1; }
+    #contact-toggle { top: 1rem; left: 1rem; }
   </style>
 </head>
 
 <body>
-  <!-- Page-length background and environment layers -->
+  <!-- Contact toggle button -->
+  <button id="contact-toggle" aria-expanded="false" class="fixed z-50 bg-black text-white px-3 py-2 rounded shadow-md">Contact Me</button>
+
+  <!-- Contact Bar (hidden until toggled) -->
+  <header id="contact-bar" class="w-full fixed top-0 left-0 z-40 bg-black text-white flex justify-center gap-6 py-3 px-4 shadow-md">
+    <a href="https://github.com/Frank-07/MyPortfolio/blob/422afbb850a73c4ca19012a5b65af7486dcd322d/CV/CV-Franco%20Agnic.pdf" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition">CV</a>
+    <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition">LinkedIn</a>
+    <a href="mailto:franco.agnic7@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition">Gmail</a>
+  </header>
+
+  <!-- Page-length background & parallax environment -->
   <div id="page-bg" aria-hidden="true"></div>
   <div id="env-far" aria-hidden="true"></div>
   <div id="env-mid" aria-hidden="true"></div>
@@ -76,51 +94,60 @@
   <div id="env-trees" aria-hidden="true"></div>
   <div id="env-fog" aria-hidden="true"></div>
 
+  <!-- ✅ Scroll container expected by scripts -->
   <main class="snap-viewport">
 
-    <!-- 1) HERO -->
-    <section id="hero" class="snap">
+    <!-- Combined INTRO (Hero + About Me) -->
+    <section id="intro" class="snap">
       <div class="shade"></div>
       <div class="content h-full flex flex-col items-center justify-center text-center p-6">
         <h1 class="title text-4xl sm:text-6xl md:text-7xl font-black">Franco Agnic</h1>
         <p class="mt-4 text-lg sm:text-xl text-gray-200 max-w-2xl">Technical Artist · Unreal Engine · Shaders · VFX · Cinematics</p>
-      </div>
-    </section>
 
-    <!-- 2) ABOUT ME (con imagen y texto centrados) -->
-    <section id="about" class="snap">
-      <div class="shade"></div>
-      <div class="content h-full flex flex-col items-center justify-center text-center p-6">
-        <img src="https://raw.githubusercontent.com/Frank-07/MyPortfolio/main/imagenes/PerfilEdited.png" alt="Profile" class="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl object-cover shadow-2xl mb-6" referrerpolicy="no-referrer" crossorigin="anonymous" loading="eager" decoding="sync" onerror="this.onerror=null; this.src='https://placehold.co/288x288?text=Profile';"/>
+        <img src="https://raw.githubusercontent.com/Frank-07/MyPortfolio/main/imagenes/PerfilEdited.png" alt="Profile" class="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl object-cover mt-8 mb-6 profile-glow" referrerpolicy="no-referrer" crossorigin="anonymous" loading="eager" decoding="sync" onerror="this.onerror=null; this.src='https://placehold.co/288x288?text=Profile';"/>
+
         <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold title">Technical Artist</h2>
         <p class="mt-4 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
         <p class="mt-2 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
       </div>
     </section>
 
-    <!-- 3) PROJECTS (8 snaps, cada uno con video de fondo y CTA) -->
-
-    <!-- Project 1 -->
-    <section class="snap project" data-project="1">
-      <div class="bg-media flex items-center justify-center px-6">
-        <!-- Embed YouTube video with margin on sides -->
-        <iframe class="w-full h-5/6 max-w-5xl rounded-xl" src="https://www.youtube.com/embed/2EGC1s9mBOI?autoplay=1&mute=1&loop=1&playlist=2EGC1s9mBOI" title="Don't Kill Rumble Trailer" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    <!-- Title before projects -->
+    <section class="snap" id="projects-intro">
       <div class="shade"></div>
-      <div class="content h-full grid place-items-center p-6">
-        <div class="max-w-4xl w-full text-center md:text-left">
-          <h3 class="title text-3xl sm:text-4xl font-bold">Don't Kill Rumble</h3>
-          <p class="mt-4 text-gray-100">Breve descripción del proyecto, mecánicas, tecnologías y un highlight de tu contribución.</p>
-          <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
-          <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="btn mt-6">
-            <img class="thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/capsule_184x69.jpg" alt="Miniatura Don't Kill Rumble" />
-            Ver proyecto
-          </a>
+      <div class="content h-full flex items-center justify-center text-center p-6">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title">Projects & Professional Experience</h2>
+      </div>
+    </section>
+
+    <!-- PROJECT 1: Don't Kill Rumble (custom layout) -->
+    <section class="snap project" data-project="1">
+      <div class="shade"></div>
+      <div class="content h-full p-6 flex items-center">
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Left: logo, description, role -->
+          <div class="text-center md:text-left">
+            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logo.png?raw=true" alt="Don't Kill Rumble Logo" class="mx-auto md:mx-0 max-h-24 md:max-h-28 object-contain mb-4"/>
+            <p class="text-gray-100">Breve descripción del proyecto, mecánicas, tecnologías y un highlight de tu contribución.</p>
+            <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Rol: <span class="font-semibold">Technical Artist</span></p>
+          </div>
+          <!-- Right: video + full-width button below -->
+          <div class="w-full md:pl-4 flex flex-col items-center">
+            <div class="rounded-xl overflow-hidden shadow-2xl mx-auto max-w-xl w-full">
+              <div class="relative" style="padding-top:56.25%;">
+                <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/U8V23GT6g6g?autoplay=1&mute=1&loop=1&playlist=U8V23GT6g6g" title="Don't Kill Rumble Trailer" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="btn mt-6 px-8 py-6 text-xl w-full flex flex-col items-center">
+              <img class="w-full max-w-lg rounded-lg mb-3" src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/header.jpg?raw=true" alt="Header Don't Kill Rumble" />
+              <span class="text-center">View Project</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Project 2 -->
+    <!-- PROJECTS 2-8: template with video bg, role, button -->
     <section class="snap project" data-project="2">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto2.mp4" poster="/posters/proyecto2.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -139,7 +166,6 @@
       </div>
     </section>
 
-    <!-- Project 3 -->
     <section class="snap project" data-project="3">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto3.mp4" poster="/posters/proyecto3.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -158,7 +184,6 @@
       </div>
     </section>
 
-    <!-- Project 4 -->
     <section class="snap project" data-project="4">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto4.mp4" poster="/posters/proyecto4.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -177,7 +202,6 @@
       </div>
     </section>
 
-    <!-- Project 5 -->
     <section class="snap project" data-project="5">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto5.mp4" poster="/posters/proyecto5.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -196,7 +220,6 @@
       </div>
     </section>
 
-    <!-- Project 6 -->
     <section class="snap project" data-project="6">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto6.mp4" poster="/posters/proyecto6.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -215,7 +238,6 @@
       </div>
     </section>
 
-    <!-- Project 7 -->
     <section class="snap project" data-project="7">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto7.mp4" poster="/posters/proyecto7.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -234,7 +256,6 @@
       </div>
     </section>
 
-    <!-- Project 8 -->
     <section class="snap project" data-project="8">
       <div class="bg-media">
         <video class="project-video" src="/videos/proyecto8.mp4" poster="/posters/proyecto8.jpg" autoplay muted loop playsinline preload="none"></video>
@@ -255,22 +276,30 @@
 
   </main>
 
-  <!-- Behavior scripts: page background progression + project video play/pause -->
+  <!-- Behavior scripts -->
   <script>
-    (function(){
-      const viewport = document.querySelector('.snap-viewport');
-      const pageBg = document.getElementById('page-bg');
-      const setPages = () => {
-        const snaps = document.querySelectorAll('section.snap');
-        pageBg.style.setProperty('--pages', snaps.length.toString());
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('contact-toggle');
+      const contactBar = document.getElementById('contact-bar');
+      const viewport = document.querySelector('.snap-viewport') || window;
+
+      let isOpen = false;
+      const setExpanded = (open) => {
+        isOpen = open; contactBar.classList.toggle('active', open); toggleBtn.setAttribute('aria-expanded', String(open));
       };
+      toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
+      viewport.addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
+
+      // Page-length background progression + parallax
+      const pageBg = document.getElementById('page-bg');
+      const setPages = () => { const snaps = document.querySelectorAll('section.snap'); pageBg.style.setProperty('--pages', snaps.length.toString()); };
       setPages();
-      const update = () => {
+      const updateBg = () => {
         const max = viewport.scrollHeight - viewport.clientHeight;
-        const t = max > 0 ? viewport.scrollTop / max : 0;
+        const t = max > 0 ? (viewport === window ? window.scrollY : viewport.scrollTop) / max : 0;
         const y = Math.round(t * 100);
         pageBg.style.backgroundPosition = `center ${y}%`;
-        const par = y / 100;
+        const par = y / 100; // parallax
         const far = document.getElementById('env-far');
         const mid = document.getElementById('env-mid');
         const near = document.getElementById('env-near');
@@ -280,37 +309,23 @@
         if (near) near.style.transform = `translateY(${(-14 * par)}vh)`;
         if (trees) trees.style.transform = `translateY(${(-18 * par)}vh)`;
       };
-      viewport.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
-      update();
+      (viewport === window ? window : viewport).addEventListener('scroll', updateBg, { passive: true });
+      window.addEventListener('resize', updateBg);
+      updateBg();
 
-      // Play/pause project background videos depending on visibility
+      // Play/pause background videos on project snaps (2-8)
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const vid = entry.target.querySelector('video');
           if (!vid) return;
-          const ensureAttrs = () => { try { vid.muted = true; vid.setAttribute('muted',''); vid.setAttribute('playsinline',''); vid.setAttribute('webkit-playsinline',''); } catch(e){} };
-          if (entry.isIntersecting) {
-            ensureAttrs();
-            // Nudge load before play for some browsers
-            if (vid.readyState < 2) { try { vid.load(); } catch(e){} }
-            const tryPlay = () => vid.play().catch(() => {
-              // Try switching source order (webm) if mp4 fails
-              const sources = vid.querySelectorAll('source');
-              if (sources.length > 1) {
-                vid.pause();
-                const first = sources[0].src; sources[0].src = sources[1].src; sources[1].src = first;
-                try { vid.load(); vid.play().catch(()=>{}); } catch(e){}
-              }
-            });
-            tryPlay();
-          } else {
-            try { vid.pause(); } catch(e){}
-          }
+          try {
+            if (entry.isIntersecting) { vid.muted = true; vid.setAttribute('playsinline',''); if (vid.readyState < 2) vid.load(); vid.play().catch(()=>{}); }
+            else { vid.pause(); }
+          } catch(e) {}
         });
-      }, { root: viewport, threshold: 0.45 });
+      }, { root: viewport === window ? null : viewport, threshold: 0.5 });
       document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
-    })();
+    });
   </script>
 </body>
 </html>
