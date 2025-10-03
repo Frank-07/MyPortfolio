@@ -258,7 +258,27 @@
             </div>
           </div>
 
-          <hr class="border-white/10"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ArtStation section (NEW) -->
+    <section id="artstation" class="snap">
+      <div class="shade"></div>
+      <div class="content h-full p-6 flex flex-col items-center justify-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-4">ArtStation</h2>
+        <p class="text-gray-300 mb-8">Latest artworks from my ArtStation profile</p>
+        <div id="artstation-grid" class="w-full max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-6"></div>
+        <div class="mt-6">
+          <a href="https://francoagnic3.artstation.com/" target="_blank" rel="noopener noreferrer" class="btn inline-flex items-center px-5 py-3 rounded-xl bg-slate-900/80 hover:bg-slate-900 ring-1 ring-white/10 hover:ring-2 hover:ring-pink-400/40 shadow-xl hover:shadow-2xl hover:shadow-pink-500/20 transition gap-2">
+            <span>View more on ArtStation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+        <div id="artstation-empty" class="text-gray-400 hidden">No projects found on ArtStation.</div>
+      </div>
+    </section>
 
     <!-- Jams projects -->
     <section class="snap project" data-project="3-4">
@@ -445,6 +465,55 @@
       }, { root: viewport === window ? null : viewport, threshold: 0.5 });
       document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
     });
+      // === ArtStation feed with diagnostics ===
+    (function(){
+      const grid = document.getElementById('artstation-grid');
+      if(!grid) return; // only if section exists
+      const empty = document.getElementById('artstation-empty');
+      const username = 'francoagnic3';
+      const perPage = 6;
+      const url = `https://www.artstation.com/users/${username}/projects.json?page=1&per_page=${perPage}`;
+
+      // If opened as file:// most browsers will block CORS
+      if (location.protocol === 'file:') {
+        if (empty) {
+          empty.innerHTML = 'Cannot load ArtStation over <code>file://</code>. Please open this page via <strong>http://</strong> or <strong>https://</strong> (e.g., with a local server like VS Code Live Server).';
+          empty.classList.remove('hidden');
+        }
+        return;
+      }
+
+      const ctl = new AbortController();
+      const to = setTimeout(() => ctl.abort('timeout'), 9000);
+
+      fetch(url, { headers: { 'Accept': 'application/json' }, mode: 'cors', signal: ctl.signal })
+        .then(r => { clearTimeout(to); if (r.ok) return r.json(); throw new Error('ArtStation API error ' + r.status); })
+        .then(data => {
+          const projects = Array.isArray(data.data) ? data.data : [];
+          if(projects.length === 0){ if(empty){ empty.textContent = 'No projects found on ArtStation.'; empty.classList.remove('hidden'); } return; }
+          grid.innerHTML = projects.slice(0, 6).map(p => {
+            const link = p.permalink || `https://www.artstation.com/artwork/${p.hash_id || ''}`;
+            const cover = (p.cover && (p.cover.small_image_url || p.cover.image_url)) || p.smaller_square_cover_url || p.cover_url || '';
+            const title = (p.title || 'Project').replace(/</g,'&lt;');
+            return `
+              <a href="${link}" target="_blank" rel="noopener noreferrer" class="group rounded-2xl overflow-hidden bg-slate-900 shadow-xl hover:shadow-2xl hover:shadow-pink-500/20 ring-1 ring-white/10 hover:ring-2 hover:ring-pink-400/40 transition transform hover:-translate-y-0.5 focus:outline-none">
+                <div class="relative" style="padding-top:66.66%;">
+                  <img src="${cover}" alt="${title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:brightness-110"/>
+                </div>
+                <div class="p-3 border-t border-white/10">
+                  <h3 class="text-sm sm:text-base font-semibold truncate">${title}</h3>
+                </div>
+              </a>`;
+          }).join('');
+        })
+        .catch((err) => {
+          console.error('ArtStation fetch failed:', err);
+          if(empty){
+            empty.innerHTML = `Failed to fetch ArtStation projects.<br><small class='opacity-75'>If you are running locally, use a local server (http://) to avoid CORS issues. Also check your network connection.</small>`;
+            empty.classList.remove('hidden');
+          }
+        });
+    })();
   </script>
 </body>
 </html>
