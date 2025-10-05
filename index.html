@@ -11,12 +11,12 @@
 
   <!-- Base styles -->
   <style>
-    :root { --overlay: rgba(0,0,0,0.35); }
+    :root { --overlay: rgba(0,0,0,0.45); }
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; margin: 0; background:#000; color:#fff; }
 
     /* Scroll Snap viewport */
-    .snap-viewport { min-height: 100%; scroll-snap-type: none; scroll-behavior: smooth; }
+    .snap-viewport { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
     section.snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100vh; position: relative; }
 
     /* Section layering */
@@ -143,26 +143,10 @@
     @keyframes ctaGlow { 0%,100% { opacity: .35; } 50% { opacity: .6; } }
     @keyframes ctaSheen { 0% { transform: translateX(-40%) rotate(18deg); } 60% { transform: translateX(40%) rotate(18deg); } 100% { transform: translateX(40%) rotate(18deg); } }
       
-    /* Contact button highlight */
-    @keyframes pulseCyan {
-      0%, 100% { box-shadow: 0 0 10px rgba(0,255,255,0.5), 0 0 20px rgba(0,255,255,0.4); }
-      50% { box-shadow: 0 0 25px rgba(0,255,255,0.9), 0 0 50px rgba(0,255,255,0.7); }
-    }
-    #contact-toggle {
-      top: 1rem; left: 1rem;
-      position: fixed; z-index: 50;
-      background: linear-gradient(90deg, #00ffff, #06b6d4);
-      color: black; font-weight: 700; text-transform: uppercase;
-      padding: 0.75rem 1rem; border-radius: 0.75rem;
-      box-shadow: 0 0 10px rgba(0,255,255,0.5);
-      animation: pulseCyan 2s infinite;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    #contact-toggle:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(0,255,255,0.8); }
+   
+   
 
-    /* Contact bar */
-     #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity: 0; }
-    #contact-bar.active { transform: translateY(0); opacity: 1; }
+   
   </style>
 </head>
 <body>
@@ -181,6 +165,10 @@
   <div id="env-near" aria-hidden="true"></div>
   <div id="env-trees" aria-hidden="true"></div>
   <div id="env-fog" aria-hidden="true"></div>
+  
+  
+  
+
   <!-- ✅ Scroll container expected by scripts -->
   <main class="snap-viewport">
 
@@ -303,7 +291,7 @@
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-2">ArtStation — Artwork</h2>
         <p class="text-gray-300 mb-6">Browse some of my scene art — use Next/Prev</p>
         <div class="w-full max-w-5xl mx-auto">
-          <div class=\"relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl\">
+          <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl bg-black/40">
             <img id="as-slide" src="" alt="ArtStation Artwork" class="w-full h-[60vh] object-contain select-none" draggable="false"/>
           </div>
           <div class="mt-4 flex items-center justify-between gap-3">
@@ -407,11 +395,8 @@
       </div>
     </section>
   
-
-      
-    <!-- Contact Me (final snap section) -->
-    <section id="contact-section" class="snap">
-      <div class="shade"></div>
+  <!-- Contact Me (final snap section) -->
+    
       <div class="content h-full p-6 flex flex-col items-center justify-center text-center">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-6">Contact Me</h2>
         <div class="w-full max-w-5xl mx-auto bg-black/60 rounded-2xl border border-cyan-400/30 shadow-xl">
@@ -432,8 +417,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const toggleBtn = document.getElementById('contact-toggle');
       const contactBar = document.getElementById('contact-bar');
-      const viewportEl = document.querySelector('.snap-viewport');
-      const scrollEl = (viewportEl && viewportEl.scrollHeight > viewportEl.clientHeight) ? viewportEl : window;
+      const viewport = document.querySelector('.snap-viewport') || window;
 
       let isOpen = false;
       const setExpanded = (open) => {
@@ -445,15 +429,15 @@
       // Only attach listeners if the elements exist
       if (toggleBtn) toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
       // Hide on scroll only if bar exists (no-op otherwise)
-      scrollEl.addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
+      (viewport === window ? window : viewport).addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
 
       // Page-length background progression + parallax
       const pageBg = document.getElementById('page-bg');
       const setPages = () => { const snaps = document.querySelectorAll('section.snap'); pageBg.style.setProperty('--pages', snaps.length.toString()); };
       setPages();
       const updateBg = () => {
-        const max = (scrollEl === window ? document.documentElement.scrollHeight - window.innerHeight : scrollEl.scrollHeight - scrollEl.clientHeight);
-        const scrollPos = (scrollEl === window ? window.scrollY : scrollEl.scrollTop);
+        const max = viewport.scrollHeight - viewport.clientHeight;
+        const scrollPos = (viewport === window ? window.scrollY : viewport.scrollTop);
         const t = max > 0 ? scrollPos / max : 0; // 0 = day (top), 1 = night (bottom)
 
         // Move the gradient subtly
@@ -521,7 +505,7 @@
         if (near) near.style.transform = `translateY(${(-10 * par)}vh)`;
         if (trees) trees.style.transform = `translateY(${(-12 * par)}vh)`;
       };
-      scrollEl.addEventListener('scroll', updateBg, { passive: true });
+      (viewport === window ? window : viewport).addEventListener('scroll', updateBg, { passive: true });
       window.addEventListener('resize', updateBg);
       updateBg();
 
@@ -535,7 +519,7 @@
             else { vid.pause(); }
           } catch(e) {}
         });
-      }, { root: (scrollEl === window ? null : scrollEl), threshold: 0.5 });
+      }, { root: viewport === window ? null : viewport, threshold: 0.5 });
       document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
 
       // ===== Tiny tests (optional): add ?test-contact=1 to URL =====
@@ -578,4 +562,49 @@
     if(!img || !prev || !next || !counter) return;
 
     let i = 0;
-    co
+    const total = urls.length;
+
+    function preload(src){ const im = new Image(); im.src = src; }
+
+    function show(idx){
+      i = (idx + total) % total;
+      img.style.opacity = '0';
+      const src = urls[i];
+      // smooth fade in when new image loads
+      const temp = new Image();
+      temp.onload = () => { img.src = src; requestAnimationFrame(() => { img.style.opacity = '1'; }); };
+      temp.onerror = () => { img.src = src; img.style.opacity = '1'; };
+      temp.src = src;
+      counter.textContent = `${i+1} / ${total}`;
+      // Preload neighbors
+      preload(urls[(i+1)%total]);
+      preload(urls[(i-1+total)%total]);
+    }
+
+    prev.addEventListener('click', () => show(i-1));
+    next.addEventListener('click', () => show(i+1));
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement && ['INPUT','TEXTAREA','SELECT','BUTTON','A'].includes(document.activeElement.tagName)) return;
+      if (e.key === 'ArrowLeft') show(i-1);
+      if (e.key === 'ArrowRight') show(i+1);
+    });
+
+    // Simple swipe support on the image
+    let startX = null;
+    img.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+    img.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const dx = (e.changedTouches[0].clientX - startX);
+      if (Math.abs(dx) > 40) { if (dx < 0) show(i+1); else show(i-1); }
+      startX = null;
+    });
+
+    // Initial
+    img.style.transition = 'opacity .25s ease';
+    show(0);
+  })();
+</script>
+</body>
+</html>
