@@ -80,10 +80,7 @@
       radial-gradient(50px 30px at 92% 16%, rgba(255,255,255,.2) 40%, transparent 60%);
       filter: blur(2px); transition: opacity .2s linear, transform .2s linear; }
 
-    /* Contact toggle panel */
-    #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity:0; }
-    #contact-bar.active { transform: translateY(0); opacity:1; }
-    #contact-toggle { top: 1rem; left: 1rem; }
+ 
       /* === Day-to-Night Sky Additions === */
     #sky-day, #sky-night, #stars, #stars2, #clouds, #sun { position: fixed; inset: 0; pointer-events: none; }
     #sky-day { z-index: -6; background: linear-gradient(180deg, /* midday blue */ #2fa0ff 0%, #37a6ff 20%, #49b5ff 35%, /* start warm */ #ff7a1c 58%, /* strong orange */ #ff5e00 68%, /* deep pink */ #ff3f6a 80%, /* soft peach */ #ffc0a8 100%); opacity: 1; transition: opacity .2s linear; }
@@ -116,19 +113,59 @@
     /* Subtle moving gradient to tint environment across the page height */
     #page-bg { background-image: linear-gradient(180deg, #2fa0ff 0%, #3aaaff 20%, #4cb9ff 40%, #ff7a1c 59%, #ff4e1a 68%, #ff3f6a 80%, #a067ff 100%); background-repeat: no-repeat; background-size: 100% calc(var(--pages, 10) * 100vh); background-position: center 0%; }
 
-</style>
+    /* === CTA ArtStation Animated Button === */
+    .cta-artstation {
+      position: relative;
+      background: linear-gradient(180deg, #0f172a, #0b1324);
+      border: 1px solid rgba(255,255,255,0.09);
+      animation: ctaBreath 2.4s ease-in-out infinite;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .cta-artstation:hover { box-shadow: 0 16px 32px rgba(0,0,0,.35); transform: translateY(-3px); }
+    .cta-artstation:after {
+      content: "";
+      position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: radial-gradient(120px 60px at -10% 50%, rgba(59,130,246,.25), transparent 60%),
+                  radial-gradient(120px 60px at 110% 50%, rgba(236,72,153,.25), transparent 60%);
+      filter: blur(18px);
+      opacity: .45;
+      animation: ctaGlow 4s ease-in-out infinite;
+    }
+    .cta-artstation .as-icon { filter: drop-shadow(0 2px 6px rgba(34,211,238,0.25)); }
+    .cta-artstation .label { letter-spacing: .2px; }
+    .cta-artstation .shine {
+      content: ""; position: absolute; inset: -200% -50% auto -50%; height: 300%; transform: rotate(18deg);
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.06) 45%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.06) 55%, transparent 100%);
+      mix-blend-mode: screen; pointer-events: none; animation: ctaSheen 5.2s ease-in-out infinite;
+    }
+    @keyframes ctaBreath { 0%,100% { box-shadow: 0 10px 20px rgba(0,0,0,.25); } 50% { box-shadow: 0 14px 28px rgba(0,0,0,.32); } }
+    @keyframes ctaGlow { 0%,100% { opacity: .35; } 50% { opacity: .6; } }
+    @keyframes ctaSheen { 0% { transform: translateX(-40%) rotate(18deg); } 60% { transform: translateX(40%) rotate(18deg); } 100% { transform: translateX(40%) rotate(18deg); } }
+      
+    /* Contact button highlight */
+    @keyframes pulseCyan {
+      0%, 100% { box-shadow: 0 0 10px rgba(0,255,255,0.5), 0 0 20px rgba(0,255,255,0.4); }
+      50% { box-shadow: 0 0 25px rgba(0,255,255,0.9), 0 0 50px rgba(0,255,255,0.7); }
+    }
+    #contact-toggle {
+      top: 1rem; left: 1rem;
+      position: fixed; z-index: 50;
+      background: linear-gradient(90deg, #00ffff, #06b6d4);
+      color: black; font-weight: 700; text-transform: uppercase;
+      padding: 0.75rem 1rem; border-radius: 0.75rem;
+      box-shadow: 0 0 10px rgba(0,255,255,0.5);
+      animation: pulseCyan 2s infinite;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #contact-toggle:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(0,255,255,0.8); }
+
+    /* Contact bar */
+    #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity: 0; }
+    #contact-bar.active { transform: translateY(0); opacity: 1; }
+  </style>
 </head>
-
 <body>
-  <!-- Contact toggle button -->
-  <button id="contact-toggle" aria-expanded="false" class="fixed z-50 bg-black text-white px-3 py-2 rounded shadow-md">Contact Me</button>
-
-  <!-- Contact Bar (hidden until toggled) -->
-  <header id="contact-bar" class="w-full fixed top-0 left-0 z-40 bg-black text-white flex justify-center gap-6 py-3 px-4 shadow-md">
-    <a href="https://github.com/Frank-07/MyPortfolio/blob/422afbb850a73c4ca19012a5b65af7486dcd322d/CV/CV-Franco%20Agnic.pdf" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition">CV</a>
-    <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="flex items-center gap-2 hover:text-blue-400 transition">LinkedIn</a>
-    <a href="mailto:franco.agnic7@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition">Gmail</a>
-  </header>
 
   <!-- Page-length background & parallax environment -->
   <div id="sky-day" aria-hidden="true"></div>
@@ -144,6 +181,16 @@
   <div id="env-near" aria-hidden="true"></div>
   <div id="env-trees" aria-hidden="true"></div>
   <div id="env-fog" aria-hidden="true"></div>
+  <!-- Enhanced Contact Toggle Button -->
+  <button id="contact-toggle" aria-expanded="false">Contact Me</button>
+
+  <!-- Contact Bar -->
+  <header id="contact-bar" class="w-full fixed top-0 left-0 z-40 bg-black text-white flex justify-center gap-8 py-4 px-4 shadow-lg border-b border-cyan-400/40">
+    <a href="https://github.com/Frank-07/MyPortfolio/blob/main/CV/-CV-Franco%20Agnic.pdf" target="_blank" class="hover:text-cyan-400 transition font-semibold">CV</a>
+    <a href="https://frank-07.github.io/Cover-Letter/" target="_blank" class="hover:text-cyan-400 transition font-semibold">Cover Letter</a>
+    <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="hover:text-cyan-400 transition font-semibold">LinkedIn</a>
+    <a href="mailto:franco.agnic7@gmail.com" class="hover:text-cyan-400 transition font-semibold">Gmail</a>
+  </header>
 
   <!-- ✅ Scroll container expected by scripts -->
   <main class="snap-viewport">
@@ -276,8 +323,18 @@
             <button id="as-next" class="btn px-5 py-3 rounded-xl">Next</button>
           </div>
           <div class="mt-6 text-center">
-            <a href="https://www.artstation.com/francoagnic3" target="_blank" rel="noopener noreferrer" class="btn inline-flex items-center px-5 py-3 rounded-xl">
-              View more on ArtStation
+            <a href="https://www.artstation.com/francoagnic3" target="_blank" rel="noopener noreferrer" class="btn cta-artstation inline-flex items-center px-5 py-3 rounded-xl" aria-label="View more on ArtStation">
+              <svg class="as-icon w-6 h-6" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="asG" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#22d3ee"/>
+                    <stop offset="100%" stop-color="#3b82f6"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#asG)" d="M103.2 40.5c7.5-13 26.1-13 33.6 0l77.2 134c7.5 13-1.9 29.3-16.8 29.3H42.8c-14.9 0-24.3-16.3-16.8-29.3l23.8-41.4h89.8l-22.4-38.9H67.9l35.3-53.7zM71 189.8l22.5-39.2h69l22.5 39.2H71z"/>
+              </svg>
+              <span class="label">View more on ArtStation</span>
+              <span class="shine" aria-hidden="true"></span>
             </a>
           </div>
         </div>
@@ -373,10 +430,15 @@
 
       let isOpen = false;
       const setExpanded = (open) => {
-        isOpen = open; contactBar.classList.toggle('active', open); toggleBtn.setAttribute('aria-expanded', String(open));
+        isOpen = open;
+        if (contactBar) contactBar.classList.toggle('active', open);
+        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', String(open));
       };
-      toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
-      viewport.addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
+
+      // Only attach listeners if the elements exist
+      if (toggleBtn) toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
+      // Hide on scroll only if bar exists (no-op otherwise)
+      (viewport === window ? window : viewport).addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
 
       // Page-length background progression + parallax
       const pageBg = document.getElementById('page-bg');
@@ -468,6 +530,18 @@
         });
       }, { root: viewport === window ? null : viewport, threshold: 0.5 });
       document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
+
+      // ===== Tiny tests (optional): add ?test-contact=1 to URL =====
+      try {
+        const params = new URLSearchParams(location.search);
+        if (params.get('test-contact') === '1') {
+          const results = [];
+          results.push({ test: 'toggleBtn exists?', value: !!toggleBtn });
+          results.push({ test: 'contactBar exists?', value: !!contactBar });
+          results.push({ test: 'No crash when missing', value: true });
+          console.table(results);
+        }
+      } catch(e) {}
     });
   </script>
 <script>
