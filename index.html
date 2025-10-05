@@ -1,588 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Franco Agnic — Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Portfolio</title>
+    <!-- Incluye el CDN de Tailwind CSS para un estilo rápido y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga la fuente "Inter" de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para los íconos de redes sociales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Se cambió a un fondo de imagen con un patrón similar al de la referencia */
+            background-image: url('https://placehold.co/1920x1080/fef08a/fef08a?text=');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #fef08a; /* Color de fallback */
+            color: #1f2937;
+        }
 
-  <!-- Base styles -->
-  <style>
-    :root { --overlay: rgba(0,0,0,0.35); }
-    html, body { height: 100%; }
-    body { font-family: 'Inter', sans-serif; margin: 0; background:#000; color:#fff; }
+        .card-shadow {
+            /* Aumenta la sombra para un contorno más pronunciado */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-    /* Scroll Snap viewport */
-    .snap-viewport { min-height: 100%; scroll-snap-type: none; scroll-behavior: smooth; }
-    section.snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100vh; position: relative; }
-
-    /* Section layering */
-    .bg-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-    .bg-media img, .bg-media video, .bg-media iframe { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .shade { position: absolute; inset: 0; background: transparent; z-index: 1; }
-/* Re-enable overlay ONLY for About Me (intro) and first 3 projects */
-#intro > .shade,
-section.project[data-project="1"] > .shade,
-section.project[data-project="2"] > .shade,
-section.project[data-project="3-4"] > .shade { background: var(--overlay); }
-    .content { position: relative; z-index: 2; }
-
-    /* Buttons */
-    .btn { display: inline-flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: .75rem; background: #111827; color: white; font-weight: 600; transition: transform .2s, box-shadow .2s, opacity .2s; box-shadow: 0 10px 20px rgba(0,0,0,.2); }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.24); }
-    .thumb { width: 56px; height: 56px; border-radius: .5rem; object-fit: cover; flex: 0 0 56px; }
-    .title { letter-spacing: -0.02em; }
-
-    /* Profile glow */
-    @keyframes glowPulse {
-      0% { box-shadow: 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.3); }
-      50% { box-shadow: 0 0 20px rgba(0,255,255,0.7), 0 0 40px rgba(0,255,255,0.5); }
-      100% { box-shadow: 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.3); }
-    }
-    .profile-glow { animation: glowPulse 4s ease-in-out infinite; border-radius: 1rem; }
-
-    /* Page-length background + environment layers */
-    #page-bg { position: fixed; inset: 0; z-index: -7; pointer-events: none; will-change: background-position; }
-    #page-bg {
-      background-image:
-        linear-gradient(180deg, #0b1b2b 0%, #15293e 30%, #2c3f5c 55%, #5a3d6d 72%, #8b4660 84%, #f27a58 93%, #ffb36b 100%),
-        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.9) 50%, transparent 51%),
-        radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,.8) 50%, transparent 51%),
-        radial-gradient(1.2px 1.2px at 40% 22%, rgba(255,255,255,.85) 50%, transparent 51%),
-        radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,.8) 50%, transparent 51%),
-        radial-gradient(1.5px 1.5px at 85% 35%, rgba(255,255,255,.9) 50%, transparent 51%),
-        radial-gradient(1px 1px at 60% 8%, rgba(255,255,255,.7) 50%, transparent 51%),
-        radial-gradient(1px 1px at 15% 55%, rgba(255,255,255,.7) 50%, transparent 51%),
-        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,.75) 50%, transparent 51%);
-      background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
-      background-size: 100% calc(var(--pages, 10) * 100vh), auto, auto, auto, auto, auto, auto, auto, auto;
-      background-position: center 0%, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    }
-
-    /* Environment parallax layers */
-    #env-far, #env-mid, #env-near, #env-trees, #env-fog, #ground-fill { position: fixed; inset: 0; z-index: -2; pointer-events: none; will-change: transform, opacity; }
-    #env-far { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'><path d='M0 320 L120 240 L220 300 L340 210 L470 290 L560 200 L680 290 L820 190 L980 300 L1120 250 L1200 320 L1200 400 L0 400 Z' fill='%23233a53'/></svg>") bottom center / cover no-repeat; opacity:0.6; }
-    #env-mid { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'><path d='M0 350 L150 250 L300 340 L450 230 L600 320 L750 240 L900 330 L1050 260 L1200 350 L1200 420 L0 420 Z' fill='%23102133'/></svg>") bottom center / cover no-repeat; opacity:0.75; }
-    #env-near { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'><g fill='%23060f18'><path d='M50 280 l40 -90 l40 90 z'/><path d='M150 280 l30 -70 l30 70 z'/><path d='M230 280 l45 -100 l45 100 z'/><path d='M340 280 l35 -85 l35 85 z'/><path d='M430 280 l50 -115 l50 115 z'/><path d='M560 280 l38 -90 l38 90 z'/><path d='M650 280 l46 -110 l46 110 z'/><path d='M760 280 l34 -80 l34 80 z'/><path d='M840 280 l52 -120 l52 120 z'/><path d='M980 280 l40 -90 l40 90 z'/><path d='M1080 280 l36 -82 l36 82 z'/><rect y='280' width='1200' height='20' fill='%23060f18'/></g></svg>") bottom center / cover no-repeat; opacity:0.95; }
-    #env-trees { background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 280'><g fill='%2304080f'><path d='M40 260 l35 -85 l35 85 z'/><path d='M120 260 l25 -65 l25 65 z'/><path d='M200 260 l40 -95 l40 95 z'/><path d='M300 260 l30 -75 l30 75 z'/><path d='M380 260 l50 -115 l50 115 z'/><path d='M480 260 l35 -85 l35 85 z'/><path d='M600 260 l45 -105 l45 105 z'/><path d='M700 260 l33 -80 l33 80 z'/><path d='M800 260 l48 -120 l48 120 z'/><path d='M920 260 l38 -92 l38 92 z'/><path d='M1040 260 l34 -84 l34 84 z'/><rect y='260' width='1200' height='20' fill='%2304080f'/></g></svg>") bottom center / cover no-repeat; opacity:1; }
-    #env-fog { background: linear-gradient(to top, rgba(20,25,35,0.95) 0%, rgba(20,25,35,0.6) 45%, rgba(20,25,35,0.25) 70%, transparent 100%); mix-blend-mode: screen; z-index: -1; }
-    /* Foreground ground fill to avoid floating at bottom */
-    #ground-fill { background: linear-gradient(to top, #060b12 0%, #08101a 60%, transparent 100%); mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 12vh, rgba(0,0,0,0) 22vh); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 12vh, rgba(0,0,0,0) 22vh); }
-
-    /* Hide hero/about bg layers so page-bg shows */
-    #hero .bg-media, #about .bg-media { display: none; }
-    /* Day clouds */
-    #clouds { z-index: -5; opacity: .85; background-image:
-      radial-gradient(60px 35px at 10% 15%, rgba(255,255,255,.25) 40%, transparent 60%),
-      radial-gradient(80px 45px at 18% 22%, rgba(255,255,255,.22) 40%, transparent 60%),
-      radial-gradient(50px 30px at 30% 10%, rgba(255,255,255,.2) 40%, transparent 60%),
-      radial-gradient(70px 40px at 52% 18%, rgba(255,255,255,.24) 40%, transparent 60%),
-      radial-gradient(90px 50px at 70% 12%, rgba(255,255,255,.2) 40%, transparent 60%),
-      radial-gradient(60px 35px at 80% 20%, rgba(255,255,255,.22) 40%, transparent 60%),
-      radial-gradient(50px 30px at 92% 16%, rgba(255,255,255,.2) 40%, transparent 60%);
-      filter: blur(2px); transition: opacity .2s linear, transform .2s linear; }
-
- 
-      /* === Day-to-Night Sky Additions === */
-    #sky-day, #sky-night, #stars, #stars2, #clouds, #sun { position: fixed; inset: 0; pointer-events: none; }
-    #sky-day { z-index: -6; background: linear-gradient(180deg, /* midday blue */ #2fa0ff 0%, #37a6ff 20%, #49b5ff 35%, /* start warm */ #ff7a1c 58%, /* strong orange */ #ff5e00 68%, /* deep pink */ #ff3f6a 80%, /* soft peach */ #ffc0a8 100%); opacity: 1; transition: opacity .2s linear; }
-    #sky-night { z-index: -6; background: linear-gradient(180deg, /* violet night */ #4b3aa6 0%, #3b3794 30%, #2a357f 60%, #1a2c66 85%, #0f224f 100%); opacity: 0; transition: opacity .2s linear; }
-    #stars { z-index: -4; background-image:
-      radial-gradient(0.8px 0.8px at 10% 15%, rgba(255,255,255,.95) 50%, transparent 51%),
-      radial-gradient(0.7px 0.7px at 12% 65%, rgba(255,255,255,.85) 50%, transparent 51%),
-      radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,.9) 50%, transparent 51%),
-      radial-gradient(0.6px 0.6px at 33% 12%, rgba(255,255,255,.8) 50%, transparent 51%),
-      radial-gradient(1.2px 1.2px at 40% 22%, rgba(255,255,255,.85) 50%, transparent 51%),
-      radial-gradient(0.9px 0.9px at 52% 48%, rgba(255,255,255,.9) 50%, transparent 51%),
-      radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,.85) 50%, transparent 51%),
-      radial-gradient(0.8px 0.8px at 75% 72%, rgba(255,255,255,.8) 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 85% 35%, rgba(255,255,255,.95) 50%, transparent 51%),
-      radial-gradient(0.7px 0.7px at 90% 62%, rgba(255,255,255,.7) 50%, transparent 51%),
-      radial-gradient(0.9px 0.9px at 60% 8%, rgba(255,255,255,.8) 50%, transparent 51%),
-      radial-gradient(0.8px 0.8px at 15% 55%, rgba(255,255,255,.8) 50%, transparent 51%),
-      radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,.85) 50%, transparent 51%);
-      background-repeat: repeat; opacity: 0; transition: opacity .2s linear; }
-    /* larger stars layer for variety */
-    #stars2 { z-index: -3; background-image:
-      radial-gradient(2px 2px at 22% 12%, rgba(255,255,255,.9) 50%, transparent 51%),
-      radial-gradient(1.8px 1.8px at 48% 28%, rgba(255,255,240,.9) 50%, transparent 51%),
-      radial-gradient(2.2px 2.2px at 66% 44%, rgba(230,240,255,.9) 50%, transparent 51%),
-      radial-gradient(1.6px 1.6px at 78% 66%, rgba(255,255,255,.85) 50%, transparent 51%),
-      radial-gradient(2px 2px at 30% 72%, rgba(255,250,240,.9) 50%, transparent 51%);
-      background-repeat: repeat; opacity: 0; transition: opacity .2s linear; }
-    #sun { z-index: -2; display: flex; align-items: center; justify-content: center; }
-    #sun::before { content: ""; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #fff6a0 0%, #ffd25e 40%, rgba(255,210,94,0.9) 60%, rgba(255,210,94,0.0) 78%); filter: blur(0.5px); box-shadow: 0 0 80px rgba(255,210,94,0.6), 0 0 140px rgba(255,180,60,0.45); transform: translateY(0); transition: transform .2s linear, opacity .2s linear; }
-    /* Subtle moving gradient to tint environment across the page height */
-    #page-bg { background-image: linear-gradient(180deg, #2fa0ff 0%, #3aaaff 20%, #4cb9ff 40%, #ff7a1c 59%, #ff4e1a 68%, #ff3f6a 80%, #a067ff 100%); background-repeat: no-repeat; background-size: 100% calc(var(--pages, 10) * 100vh); background-position: center 0%; }
-
-    /* === CTA ArtStation Animated Button === */
-    .cta-artstation {
-      position: relative;
-      background: linear-gradient(180deg, #0f172a, #0b1324);
-      border: 1px solid rgba(255,255,255,0.09);
-      animation: ctaBreath 2.4s ease-in-out infinite;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .cta-artstation:hover { box-shadow: 0 16px 32px rgba(0,0,0,.35); transform: translateY(-3px); }
-    .cta-artstation:after {
-      content: "";
-      position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: radial-gradient(120px 60px at -10% 50%, rgba(59,130,246,.25), transparent 60%),
-                  radial-gradient(120px 60px at 110% 50%, rgba(236,72,153,.25), transparent 60%);
-      filter: blur(18px);
-      opacity: .45;
-      animation: ctaGlow 4s ease-in-out infinite;
-    }
-    .cta-artstation .as-icon { filter: drop-shadow(0 2px 6px rgba(34,211,238,0.25)); }
-    .cta-artstation .label { letter-spacing: .2px; }
-    .cta-artstation .shine {
-      content: ""; position: absolute; inset: -200% -50% auto -50%; height: 300%; transform: rotate(18deg);
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.06) 45%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.06) 55%, transparent 100%);
-      mix-blend-mode: screen; pointer-events: none; animation: ctaSheen 5.2s ease-in-out infinite;
-    }
-    @keyframes ctaBreath { 0%,100% { box-shadow: 0 10px 20px rgba(0,0,0,.25); } 50% { box-shadow: 0 14px 28px rgba(0,0,0,.32); } }
-    @keyframes ctaGlow { 0%,100% { opacity: .35; } 50% { opacity: .6; } }
-    @keyframes ctaSheen { 0% { transform: translateX(-40%) rotate(18deg); } 60% { transform: translateX(40%) rotate(18deg); } 100% { transform: translateX(40%) rotate(18deg); } }
-      
-    /* Contact button highlight */
-    @keyframes pulseCyan {
-      0%, 100% { box-shadow: 0 0 10px rgba(0,255,255,0.5), 0 0 20px rgba(0,255,255,0.4); }
-      50% { box-shadow: 0 0 25px rgba(0,255,255,0.9), 0 0 50px rgba(0,255,255,0.7); }
-    }
-    #contact-toggle {
-      top: 1rem; left: 1rem;
-      position: fixed; z-index: 50;
-      background: linear-gradient(90deg, #00ffff, #06b6d4);
-      color: black; font-weight: 700; text-transform: uppercase;
-      padding: 0.75rem 1rem; border-radius: 0.75rem;
-      box-shadow: 0 0 10px rgba(0,255,255,0.5);
-      animation: pulseCyan 2s infinite;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    #contact-toggle:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(0,255,255,0.8); }
-
-    /* Contact bar */
-     #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity: 0; }
-    #contact-bar.active { transform: translateY(0); opacity: 1; }
-  </style>
+        .hover-shadow:hover {
+            /* Aumenta la sombra al pasar el mouse para un efecto de elevación */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
 </head>
-<body>
+<body class="p-6">
 
-  <!-- Page-length background & parallax environment -->
-  <div id="sky-day" aria-hidden="true"></div>
-  <div id="sky-night" aria-hidden="true"></div>
-  <div id="clouds" aria-hidden="true"></div>
-  <div id="stars" aria-hidden="true"></div>
-  <div id="stars2" aria-hidden="true"></div>
-  <div id="sun" aria-hidden="true"></div>
-  <div id="page-bg" aria-hidden="true"></div>
-  <div id="ground-fill" aria-hidden="true"></div>
-  <div id="env-far" aria-hidden="true"></div>
-  <div id="env-mid" aria-hidden="true"></div>
-  <div id="env-near" aria-hidden="true"></div>
-  <div id="env-trees" aria-hidden="true"></div>
-  <div id="env-fog" aria-hidden="true"></div>
-  <!-- ✅ Scroll container expected by scripts -->
-  <main class="snap-viewport">
+    <!-- Main container of the page, centered and with a maximum width -->
+    <div class="mx-auto max-w-7xl">
+        <!-- Main title and description -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Game Portfolio</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                A collection of game projects I have worked on. Click on each image to visit the game's page.
+            </p>
+        </header>
 
-    <!-- Combined INTRO (Hero + About Me) -->
-    <section id="intro" class="snap">
-      <div class="shade"></div>
-      <div class="content h-full flex flex-col items-center justify-center text-center p-6">
-        <h1 class="title text-4xl sm:text-6xl md:text-7xl font-black">Franco Agnic</h1>
-        <p class="mt-4 text-lg sm:text-xl text-gray-200 max-w-2xl">Technical Artist · Unreal Engine</p>
-
-        <img src="https://raw.githubusercontent.com/Frank-07/MyPortfolio/main/imagenes/PerfilEdited.png" alt="Profile" class="w-56 h-56 sm:w-72 sm:h-72 rounded-2xl object-cover mt-8 mb-6 profile-glow" referrerpolicy="no-referrer" crossorigin="anonymous" loading="eager" decoding="sync" onerror="this.onerror=null; this.src='https://placehold.co/288x288?text=Profile';"/>
-
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold title">Technical Artist</h2>
-        <p class="mt-4 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
-        <p class="mt-2 text-sm sm:text-base text-gray-100 leading-relaxed max-w-2xl">I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
-      </div>
-    </section>
-
-  
-
-    <!-- PROJECT 1: Don't Kill Rumble (custom layout) -->
-    <section class="snap project" data-project="1">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex items-center">
-        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <!-- Left: logo, description, role -->
-          <div class="text-left">
-            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logo.png?raw=true" alt="Don't Kill Rumble Logo" class="max-h-32 md:max-h-40 object-contain mb-6"/>
-            <div class="text-gray-100 space-y-4 text-sm sm:text-base leading-relaxed">
-              <p>I participated for three years in the development of DKR, a multiplayer party game King of the Hill. I assumed a multifaceted role in production, excelling in level and environment design.</p>
-              <p><strong>Key responsibilities included:</strong></p>
-              <ul class="list-disc list-inside space-y-1">
-                <li><strong>Level and Environment Design:</strong> Full creation of all game levels and scenarios.</li>
-                <li><strong>Gameplay Prototyping:</strong> Conceptualization and initial implementation of several gameplay mechanics.</li>
-                <li><strong>Technical Art and Graphic Assets:</strong> Development of cinematics, 3D models, textures, materials, and shaders.</li>
-                <li><strong>Graphics Optimization:</strong> Implementation of major improvements to ensure optimal visual and technical performance.</li>
-              </ul>
-              <p>This experience provided me with solid knowledge in multiplayer game development.</p>
-              <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Role: <span class="font-semibold">Technical Artist</span></p>
-            </div>
-          </div>
-          <!-- Right: BUTTON with embedded video like Project 3 -->
-          <div class="w-full md:pl-4 flex flex-col items-center">
-            <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="btn mt-6 w-full flex flex-col items-center p-0 overflow-hidden rounded-xl">
-              <div class="w-full max-w-xl mx-auto">
-                <div class="relative" style="padding-top:56.25%;">
-                  <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/U8V23GT6g6g?autoplay=1&mute=1&loop=1&playlist=U8V23GT6g6g" title="Don't Kill Rumble Trailer" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <!-- About Me Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4 text-center">About Me</h2>
+            <div class="max-w-4xl mx-auto relative flex flex-col items-center md:flex-row md:space-x-8">
+                <!-- Large, bold name text positioned behind the main content -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <h1 class="text-8xl md:text-9xl font-extrabold text-gray-900 text-opacity-10 uppercase select-none">
+                        Franco Agnic
+                    </h1>
                 </div>
-              </div>
-              <span class="text-center py-4 text-xl">View Project</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
 
-   
-    
-    <!-- PROJECT 2 -->
-    <section class="snap project" data-project="2">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex items-center">
-        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <div class="text-left">
-            <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logoJunior.png?raw=true" alt="Project 2 Logo" class="max-h-32 md:max-h-40 object-contain mb-6 block" style="margin-left:0;"/>
-            <div class="text-gray-100 space-y-4 text-sm sm:text-base leading-relaxed">
-              <p>For two years, I served as a Level Designer and Environment Artist on Junior Solutions, a Graphic Adventure title.</p>
-              <p>My responsibilities covered the creation of level layouts and the final environment art. I developed numerous technical art assets, such as textures, materials, and shaders, and implemented the game's Visual Effects (VFX). I also produced the in-game cinematics to enhance the storytelling.</p>
-              <p>This role built a strong expertise in visual performance optimization techniques, ensuring high graphic quality while maintaining technical efficiency.</p>
-              <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Role: <span class="font-semibold">Level Designer & Environment Artist</span></p>
-            </div>
-          </div>
-          <!-- Right: BUTTON with embedded video like Project 3 -->
-          <div class="w-full md:pl-4 flex flex-col items-center">
-            <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="btn mt-6 w-full flex flex-col items-center p-0 overflow-hidden rounded-xl">
-              <div class="w-full max-w-xl mx-auto">
-                <div class="relative" style="padding-top:56.25%;">
-                  <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/6RlL_gijiVY?autoplay=1&mute=1&loop=1&playlist=6RlL_gijiVY" title="Junior Solutions Trailer" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                <!-- Profile image container -->
+                <div class="z-10 w-full md:w-1/3 flex justify-center md:block">
+                    <img src="https://cdn.discordapp.com/attachments/965706985054027826/1420041265168519178/cyberfrankProfile.png?ex=68d3f3fc&is=68d2a27c&hm=e41daf8d52c91476e88218d34e648c0c33ec41055b126a28d2657acb123bec82" alt="Franco Nicolas Agnic profile picture" class="w-64 h-64 object-cover rounded-full shadow-lg">
                 </div>
-              </div>
-              <span class="text-center py-4 text-xl">View Project</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- PROJECT 3 -->
-    <section class="snap project" data-project="3-4">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex items-center">
-        <div class="w-full max-w-6xl mx-auto space-y-16">
-  
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div class="text-left">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/LOGOUEF.png?raw=true" alt="Project 3 Logo" class="max-h-32 md:max-h-40 object-contain mb-6 block" style="margin-left:0;"/>
-              <p class="mt-4 text-gray-100">Design and development of Rumble Royale, a game mode for Fortnite created using Unreal Engine Fortnite (UEFN), in collaboration with Scubalight Studios.</p>
-              <p class="mt-2 text-gray-100">I was entirely responsible for Level Design and Environment Design, ensuring the environments were both visually appealing and functional for gameplay. This collaboration provided me with direct experience in the entire process of development, testing, and successful publishing of games within the Fortnite ecosystem.</p>
-              <p class="mt-2 text-sm uppercase tracking-wide text-gray-300">Role: <span class="font-semibold">Level & Environment Designer</span></p>
-            </div>
-            <div class="w-full md:pl-4 flex flex-col items-center">
-              <!-- Only the button remains, with the VIDEO placed where the image used to be -->
-              <a href="https://www.fortnite.com/@scubalight_uefn/3114-3244-8481?lang=es-ES" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-xl">
-                <div class="w-full max-w-xl mx-auto">
-                  <div class="relative" style="padding-top:56.25%;">
-                    <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/SADtjffdVyo?autoplay=1&mute=1&loop=1&playlist=SADtjffdVyo" title="Project 3 Video" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-                  </div>
+                <!-- Text box container -->
+                <div class="z-10 w-full md:w-2/3 bg-white bg-opacity-50 p-6 rounded-xl text-gray-900 text-lg mt-8 md:mt-0 card-shadow">
+                    <p class="mb-2 text-xl font-semibold">Hello! 👋 I'm Franco Nicolas Agnic, but you can call me Frank. I'm from Mendoza, Argentina.</p>
+                    <p>I'm a Technical Artist specializing in Unreal Engine 5 with expertise in level design, dynamic materials, VFX with Niagara, HLSL shaders, and Control Rig. I have strong proficiency in cinematic sequences (Unreal Engine), prototyping with Blueprints, and managing the artistic pipeline (Blender, Photoshop, Premiere).</p>
                 </div>
-                <span class="text-center py-4 text-xl">View Project</span>
-              </a>
             </div>
-          </div>
+        </section>
 
-          <hr class="border-white/10"/>
+        <!-- Projects Section -->
+        <section>
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 text-center">Projects I've Worked On</h2>
+            <!-- Game gallery using a responsive grid layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-    <!-- ArtStation Artwork Carousel (NEW) -->
-    <section id="artstation-carousel" class="snap">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex flex-col items-center justify-center">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-2">ArtStation — Artwork</h2>
-        <p class="text-gray-300 mb-6">Browse some of my scene art — use Next/Prev</p>
-        <div class="w-full max-w-5xl mx-auto">
-          <div class=\"relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl\">
-            <img id="as-slide" src="" alt="ArtStation Artwork" class="w-full h-[60vh] object-contain select-none" draggable="false"/>
-          </div>
-          <div class="mt-4 flex items-center justify-between gap-3">
-            <button id="as-prev" class="btn px-5 py-3 rounded-xl">Prev</button>
-            <div class="text-sm text-gray-300" id="as-counter">--</div>
-            <button id="as-next" class="btn px-5 py-3 rounded-xl">Next</button>
-          </div>
-          <div class="mt-6 text-center">
-            <a href="https://www.artstation.com/francoagnic3" target="_blank" rel="noopener noreferrer" class="btn cta-artstation inline-flex items-center px-5 py-3 rounded-xl" aria-label="View more on ArtStation">
-              <svg class="as-icon w-6 h-6" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="asG" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#22d3ee"/>
-                    <stop offset="100%" stop-color="#3b82f6"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#asG)" d="M103.2 40.5c7.5-13 26.1-13 33.6 0l77.2 134c7.5 13-1.9 29.3-16.8 29.3H42.8c-14.9 0-24.3-16.3-16.8-29.3l23.8-41.4h89.8l-22.4-38.9H67.9l35.3-53.7zM71 189.8l22.5-39.2h69l22.5 39.2H71z"/>
-              </svg>
-              <span class="label">View more on ArtStation</span>
-              <span class="shine" aria-hidden="true"></span>
-            </a>
-          </div>
+                <!-- Card for the featured game "Don't Kill Rumble" -->
+                <!-- This card is larger and more prominent -->
+                <div class="lg:col-span-3 rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://store.steampowered.com/app/2146310/Dont_Kill_Rumble/" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2146310/header.jpg?t=1754921990" alt="Image of Don't Kill Rumble" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Don't Kill Rumble</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for "Junior Solutions" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://store.steampowered.com/app/1460520/Junior_Solutions/" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1460520/header.jpg?t=1676659733" alt="Image of Junior Solutions" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Junior Solutions</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for the game "Buzzle" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://ggjv4.s3.us-west-1.amazonaws.com/files/styles/flexslider_full/s3/games/2025/823950/screenshot/UniqueGameplay_0.png?VersionId=WDDPap4NDuwfeWhWoxFvx96wbtSpwOop&itok=h_eC-zEL" alt="Image of Buzzle" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Buzzle</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for the game "Bingaboll" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://pablyco.itch.io/bingaboll" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1hZ2UvMTc2NjU4OS8xMDM4ODQ1My5wbmc=/original/JqUKjA.png" alt="Image of Bingaboll" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Bingaboll</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for the YouTube video -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://www.youtube.com/watch?v=YcZpXZbWEjE&t=2s&ab_channel=UEDeivor" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://i.gyazo.com/e7bbd31c575a64998da43019e088615f.png" alt="Image of TheCubeWorld" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">TheCubeWorld</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for the game "Ritmine" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1hZ2UvMTMzNjA0OS83ODE0NjAzLnBuZw==/original/xWJEOW.png" alt="Image of Ritmine" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Ritmine</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+                <!-- Card for the game "Skuishy" -->
+                <div class="rounded-xl card-shadow hover-shadow transition-shadow duration-300">
+                    <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="block">
+                        <img src="https://img.itch.zone/aW1nLzg2MTU5NDMuanBn/original/GbAgcc.jpg" alt="Image of Skuishy" class="w-full h-auto object-cover rounded-t-xl">
+                    </a>
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-gray-800">Skuishy</h2>
+                        <p class="text-gray-600">Technical Artist</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- Contact Section with social media icons -->
+        <div class="text-center mt-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Contact Me</h2>
+            <div class="flex justify-center space-x-4">
+                <!-- LinkedIn icon -->
+                <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" rel="noopener noreferrer" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fab fa-linkedin-in text-white text-3xl"></i>
+                </a>
+                <!-- Email icon -->
+                <a href="mailto:franco.agnic7@gmail.com" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fas fa-envelope text-white text-3xl"></i>
+                </a>
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- Jams projects -->
-    <section class="snap project" data-project="3-4">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex flex-col items-center justify-center">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-4">Game Jam Projects</h2>\n        <p class=\"text-lg text-gray-300 mb-10\">Role: Level Designer & Environment Artist</p>
-        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-
-
-          <!-- CARD 1: Buzzle / Project 4 -->
-          <a href="https://globalgamejam.org/games/2025/buzzle-7" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-2xl !bg-slate-900 shadow-xl hover:shadow-2xl transition">
-            <div class="w-full px-4 pt-4">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logoBuzzle.png?raw=true" alt="Buzzle Logo" class="max-h-20 object-contain mx-auto"/>
-            </div>
-            <div class="w-full px-4 pb-2">
-              <div class="relative rounded-xl overflow-hidden" style="padding-top:56.25%;">
-                <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/WuEmxzxZrkc?autoplay=1&mute=1&loop=1&playlist=WuEmxzxZrkc" title="Buzzle Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <span class="w-full text-center py-3 text-base border-t border-white/10">View Project</span>
-          </a>
-
-          <!-- CARD 2: Bingaboll -->
-          <a href="https://store.steampowered.com/app/2504840/Bingaboll/" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-2xl !bg-slate-900 shadow-xl hover:shadow-2xl transition">
-            <div class="w-full px-4 pt-4">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/LogoBingaboll.png?raw=true" alt="Bingaboll Logo" class="max-h-20 object-contain mx-auto"/>
-            </div>
-            <div class="w-full px-4 pb-2">
-              <div class="relative rounded-xl overflow-hidden" style="padding-top:56.25%;">
-                <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/TUviqlSAd5I?autoplay=1&mute=1&loop=1&playlist=TUviqlSAd5I" title="Bingaboll Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <span class="w-full text-center py-3 text-base border-t border-white/10">View Project</span>
-          </a>
-
-          <!-- CARD 3: Skuishy -->
-          <a href="https://jcanovas97.itch.io/skuishy" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-2xl !bg-slate-900 shadow-xl hover:shadow-2xl transition">
-            <div class="w-full px-4 pt-4">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logoSkuishi.png?raw=true" alt="Skuishy Logo" class="max-h-20 object-contain mx-auto"/>
-            </div>
-            <div class="w-full px-4 pb-2">
-              <div class="relative rounded-xl overflow-hidden" style="padding-top:56.25%;">
-                <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/oMDGsjhcfuc?autoplay=1&mute=1&loop=1&playlist=oMDGsjhcfuc" title="Skuishy Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <span class="w-full text-center py-3 text-base border-t border-white/10">View Project</span>
-          </a>
-
-          <!-- CARD 4: Ritmine -->
-          <a href="https://pablyco.itch.io/ritmine" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-2xl !bg-slate-900 shadow-xl hover:shadow-2xl transition">
-            <div class="w-full px-4 pt-4">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/logoRitmine.png?raw=true" alt="Ritmine Logo" class="max-h-20 object-contain mx-auto"/>
-            </div>
-            <div class="w-full px-4 pb-2">
-              <div class="relative rounded-xl overflow-hidden" style="padding-top:56.25%;">
-                <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/VZZODlxh2GM?autoplay=1&mute=1&loop=1&playlist=VZZODlxh2GM" title="Ritmine Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <span class="w-full text-center py-3 text-base border-t border-white/10">View Project</span>
-          </a>
-
-          <!-- CARD 5: Cubezzle -->
-          <a href="#" target="_blank" rel="noopener noreferrer" class="btn w-full flex flex-col items-center p-0 overflow-hidden rounded-2xl !bg-slate-900 shadow-xl hover:shadow-2xl transition">
-            <div class="w-full px-4 pt-4">
-              <img src="https://github.com/Frank-07/MyPortfolio/blob/main/imagenes/LogoCUBEZZLE.png?raw=true" alt="Cubezzle Logo" class="max-h-20 object-contain mx-auto"/>
-            </div>
-            <div class="w-full px-4 pb-2">
-              <div class="relative rounded-xl overflow-hidden" style="padding-top:56.25%;">
-                <iframe class="absolute inset-0 w-full h-full" style="pointer-events:none" src="https://www.youtube.com/embed/YcZpXZbWEjE?autoplay=1&mute=1&loop=1&playlist=YcZpXZbWEjE" title="Cubezzle Gameplay" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <span class="w-full text-center py-3 text-base border-t border-white/10">View Project</span>
-          </a>
-
-        </div>
-      </div>
-    </section>
-  
-
-      
-    <!-- Contact Me (final snap section) -->
-    <section id="contact-section" class="snap">
-      <div class="shade"></div>
-      <div class="content h-full p-6 flex flex-col items-center justify-center text-center">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-6">Contact Me</h2>
-        <div class="w-full max-w-5xl mx-auto bg-transparent rounded-2xl border border-cyan-400/30 shadow-xl">
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 px-6 py-6">
-            <a href="https://github.com/Frank-07/MyPortfolio/blob/main/CV/-CV-Franco%20Agnic.pdf" target="_blank" class="btn !bg-slate-900">CV</a>
-            <a href="https://frank-07.github.io/Cover-Letter/" target="_blank" class="btn !bg-slate-900">Cover Letter</a>
-            <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="btn !bg-slate-900">LinkedIn</a>
-            <a href="mailto:franco.agnic7@gmail.com" class="btn !bg-slate-900">Gmail</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Behavior scripts -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggleBtn = document.getElementById('contact-toggle');
-      const contactBar = document.getElementById('contact-bar');
-      const viewportEl = document.querySelector('.snap-viewport');
-      const scrollEl = (viewportEl && viewportEl.scrollHeight > viewportEl.clientHeight) ? viewportEl : window;
-
-      let isOpen = false;
-      const setExpanded = (open) => {
-        isOpen = open;
-        if (contactBar) contactBar.classList.toggle('active', open);
-        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', String(open));
-      };
-
-      // Only attach listeners if the elements exist
-      if (toggleBtn) toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
-      // Hide on scroll only if bar exists (no-op otherwise)
-      scrollEl.addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
-
-      // Page-length background progression + parallax
-      const pageBg = document.getElementById('page-bg');
-      const setPages = () => { const snaps = document.querySelectorAll('section.snap'); pageBg.style.setProperty('--pages', snaps.length.toString()); };
-      setPages();
-      const updateBg = () => {
-        const max = (scrollEl === window ? document.documentElement.scrollHeight - window.innerHeight : scrollEl.scrollHeight - scrollEl.clientHeight);
-        const scrollPos = (scrollEl === window ? window.scrollY : scrollEl.scrollTop);
-        const t = max > 0 ? scrollPos / max : 0; // 0 = day (top), 1 = night (bottom)
-
-        // Move the gradient subtly
-        const y = Math.round(t * 100);
-        pageBg.style.backgroundPosition = `center ${y}%`;
-
-        // Elements
-        const skyDay = document.getElementById('sky-day');
-        const skyNight = document.getElementById('sky-night');
-        const stars = document.getElementById('stars');
-        const stars2 = document.getElementById('stars2');
-        const clouds = document.getElementById('clouds');
-        const sun = document.getElementById('sun');
-        const envFog = document.getElementById('env-fog');
-
-        // Crossfade day/night
-        if (skyDay) skyDay.style.opacity = String(1 - t);
-        if (skyNight) skyNight.style.opacity = String(t);
-
-        // More stars at night (two layers, different sizes)
-        const starSmall = Math.max(0, (t - 0.25) / 0.75);
-        const starBig = Math.max(0, (t - 0.45) / 0.55);
-        if (stars) stars.style.opacity = String(starSmall);
-        if (stars2) stars2.style.opacity = String(starBig);
-
-        // Sun movement & fade
-        if (sun) {
-          const vh = window.innerHeight;
-          const startY = -0.18 * vh;  // noon slightly above center
-          const endY = 0.58 * vh;     // near horizon
-          const sunY = startY + (endY - startY) * t;
-          // Peak glow around sunset (t≈0.6)
-          const peak = 0.6; const glow = Math.max(0, 1 - Math.abs(t - peak) / 0.6);
-          sun.style.transform = `translateY(${sunY}px)`;
-          sun.style.opacity = String(Math.min(1, glow + 0.15) * (1 - t*0.6));
-        }
-
-        // Clouds: visible by day, fade out by night, slight parallax
-        if (clouds) {
-          clouds.style.opacity = String(Math.max(0, 0.9 * (1 - t)));
-          clouds.style.transform = `translateY(${(-4 * t)}vh) translateX(${(t * 6)}vw)`;
-        }
-
-        // Fog: tint with orange/pink around sunset and darken by night
-        if (envFog) {
-          const sunsetPeak = Math.max(0, 1 - Math.abs(t - 0.6) / 0.6); // 0..1
-          const o1 = (1.0 * sunsetPeak).toFixed(3); // bottom orange intensified
-          const o2 = (0.85 * sunsetPeak).toFixed(3); // mid pink intensified
-          const dark = (0.25 + 0.45 * t).toFixed(3); // upper darkening
-          envFog.style.background = `linear-gradient(to top,
-            rgba(255,120,40, ${o1}) 0%,
-            rgba(255,90,160, ${o2}) 35%,
-            rgba(20,25,35, ${dark}) 70%,
-            transparent 100%)`;
-        }
-
-        // Parallax environment layers (reduced to avoid floating)
-        const par = y / 100;
-        const far = document.getElementById('env-far');
-        const mid = document.getElementById('env-mid');
-        const near = document.getElementById('env-near');
-        const trees = document.getElementById('env-trees');
-        if (far) far.style.transform = `translateY(${(-4 * par)}vh)`;
-        if (mid) mid.style.transform = `translateY(${(-7 * par)}vh)`;
-        if (near) near.style.transform = `translateY(${(-10 * par)}vh)`;
-        if (trees) trees.style.transform = `translateY(${(-12 * par)}vh)`;
-      };
-      scrollEl.addEventListener('scroll', updateBg, { passive: true });
-      window.addEventListener('resize', updateBg);
-      updateBg();
-
-      // Play/pause background videos on project snaps (2-8)
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const vid = entry.target.querySelector('video');
-          if (!vid) return;
-          try {
-            if (entry.isIntersecting) { vid.muted = true; vid.setAttribute('playsinline',''); if (vid.readyState < 2) vid.load(); vid.play().catch(()=>{}); }
-            else { vid.pause(); }
-          } catch(e) {}
-        });
-      }, { root: (scrollEl === window ? null : scrollEl), threshold: 0.5 });
-      document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
-
-      // ===== Tiny tests (optional): add ?test-contact=1 to URL =====
-      try {
-        const params = new URLSearchParams(location.search);
-        if (params.get('test-contact') === '1') {
-          const results = [];
-          results.push({ test: 'toggleBtn exists?', value: !!toggleBtn });
-          results.push({ test: 'contactBar exists?', value: !!contactBar });
-          results.push({ test: 'No crash when missing', value: true });
-          console.table(results);
-        }
-      } catch(e) {}
-    });
-  </script>
-<script>
-  // === ArtStation Artwork Carousel ===
-  (function(){
-    const urls = [
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Agua%20(14).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Agua%20(17).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Agua%20(23).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Agua%20(9).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Azul%20(9).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Azul%20(17).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Large%20(5).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Portadas%20(7).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Large%20(11).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Portadas%20(13).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Portadas%20(2).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Small%20(9).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Small%20(12).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Lvl_Volcan%20(7).png?raw=true",
-      "https://github.com/Frank-07/MyPortfolio/blob/main/ArtWork/Portadas%20(10).png?raw=true"
-    ];
-    const img = document.getElementById('as-slide');
-    const prev = document.getElementById('as-prev');
-    const next = document.getElementById('as-next');
-    const counter = document.getElementById('as-counter');
-    if(!img || !prev || !next || !counter) return;
-
-    let i = 0;
-    const total = urls.length;
-
-    function preload(src){ const im = new Image(); im.src = src; }
+</body>
+</html>
