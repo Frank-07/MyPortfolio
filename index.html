@@ -11,18 +11,23 @@
 
   <!-- Base styles -->
   <style>
-    :root { --overlay: rgba(0,0,0,0.45); }
+    :root { --overlay: rgba(0,0,0,0.35); }
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; margin: 0; background:#000; color:#fff; }
 
     /* Scroll Snap viewport */
-    .snap-viewport { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    .snap-viewport { min-height: 100%; scroll-snap-type: none; scroll-behavior: smooth; }
     section.snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100vh; position: relative; }
 
     /* Section layering */
     .bg-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
     .bg-media img, .bg-media video, .bg-media iframe { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .shade { position: absolute; inset: 0; background: var(--overlay); z-index: 1; }
+    .shade { position: absolute; inset: 0; background: transparent; z-index: 1; }
+/* Re-enable overlay ONLY for About Me (intro) and first 3 projects */
+#intro > .shade,
+section.project[data-project="1"] > .shade,
+section.project[data-project="2"] > .shade,
+section.project[data-project="3-4"] > .shade { background: var(--overlay); }
     .content { position: relative; z-index: 2; }
 
     /* Buttons */
@@ -303,7 +308,7 @@
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-2">ArtStation — Artwork</h2>
         <p class="text-gray-300 mb-6">Browse some of my scene art — use Next/Prev</p>
         <div class="w-full max-w-5xl mx-auto">
-          <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl bg-black/40">
+          <div class=\"relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-xl\">
             <img id="as-slide" src="" alt="ArtStation Artwork" class="w-full h-[60vh] object-contain select-none" draggable="false"/>
           </div>
           <div class="mt-4 flex items-center justify-between gap-3">
@@ -414,7 +419,7 @@
       <div class="shade"></div>
       <div class="content h-full p-6 flex flex-col items-center justify-center text-center">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-6">Contact Me</h2>
-        <div class="w-full max-w-5xl mx-auto bg-black/60 rounded-2xl border border-cyan-400/30 shadow-xl">
+        <div class="w-full max-w-5xl mx-auto bg-transparent rounded-2xl border border-cyan-400/30 shadow-xl">
           <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 px-6 py-6">
             <a href="https://github.com/Frank-07/MyPortfolio/blob/main/CV/-CV-Franco%20Agnic.pdf" target="_blank" class="btn !bg-slate-900">CV</a>
             <a href="https://frank-07.github.io/Cover-Letter/" target="_blank" class="btn !bg-slate-900">Cover Letter</a>
@@ -432,7 +437,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       const toggleBtn = document.getElementById('contact-toggle');
       const contactBar = document.getElementById('contact-bar');
-      const viewport = document.querySelector('.snap-viewport') || window;
+      const viewportEl = document.querySelector('.snap-viewport');
+      const scrollEl = (viewportEl && viewportEl.scrollHeight > viewportEl.clientHeight) ? viewportEl : window;
 
       let isOpen = false;
       const setExpanded = (open) => {
@@ -444,15 +450,15 @@
       // Only attach listeners if the elements exist
       if (toggleBtn) toggleBtn.addEventListener('click', () => setExpanded(!isOpen));
       // Hide on scroll only if bar exists (no-op otherwise)
-      (viewport === window ? window : viewport).addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
+      scrollEl.addEventListener('scroll', () => { if (isOpen) setExpanded(false); }, { passive: true });
 
       // Page-length background progression + parallax
       const pageBg = document.getElementById('page-bg');
       const setPages = () => { const snaps = document.querySelectorAll('section.snap'); pageBg.style.setProperty('--pages', snaps.length.toString()); };
       setPages();
       const updateBg = () => {
-        const max = viewport.scrollHeight - viewport.clientHeight;
-        const scrollPos = (viewport === window ? window.scrollY : viewport.scrollTop);
+        const max = (scrollEl === window ? document.documentElement.scrollHeight - window.innerHeight : scrollEl.scrollHeight - scrollEl.clientHeight);
+        const scrollPos = (scrollEl === window ? window.scrollY : scrollEl.scrollTop);
         const t = max > 0 ? scrollPos / max : 0; // 0 = day (top), 1 = night (bottom)
 
         // Move the gradient subtly
@@ -520,7 +526,7 @@
         if (near) near.style.transform = `translateY(${(-10 * par)}vh)`;
         if (trees) trees.style.transform = `translateY(${(-12 * par)}vh)`;
       };
-      (viewport === window ? window : viewport).addEventListener('scroll', updateBg, { passive: true });
+      scrollEl.addEventListener('scroll', updateBg, { passive: true });
       window.addEventListener('resize', updateBg);
       updateBg();
 
@@ -534,7 +540,7 @@
             else { vid.pause(); }
           } catch(e) {}
         });
-      }, { root: viewport === window ? null : viewport, threshold: 0.5 });
+      }, { root: (scrollEl === window ? null : scrollEl), threshold: 0.5 });
       document.querySelectorAll('section.project').forEach(sec => io.observe(sec));
 
       // ===== Tiny tests (optional): add ?test-contact=1 to URL =====
@@ -580,11 +586,3 @@
     const total = urls.length;
 
     function preload(src){ const im = new Image(); im.src = src; }
-
-    function show(idx){
-      i = (idx + total) % total;
-      img.style.opacity = '0';
-      const src = urls[i];
-      // smooth fade in when new image loads
-      const temp = new Image();
-  
