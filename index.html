@@ -161,7 +161,7 @@
     #contact-toggle:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(0,255,255,0.8); }
 
     /* Contact bar */
-    #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity: 0; }
+     #contact-bar { transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(-100%); opacity: 0; }
     #contact-bar.active { transform: translateY(0); opacity: 1; }
   </style>
 </head>
@@ -181,17 +181,6 @@
   <div id="env-near" aria-hidden="true"></div>
   <div id="env-trees" aria-hidden="true"></div>
   <div id="env-fog" aria-hidden="true"></div>
-  <!-- Enhanced Contact Toggle Button -->
-  <button id="contact-toggle" aria-expanded="false">Contact Me</button>
-
-  <!-- Contact Bar -->
-  <header id="contact-bar" class="w-full fixed top-0 left-0 z-40 bg-black text-white flex justify-center gap-8 py-4 px-4 shadow-lg border-b border-cyan-400/40">
-    <a href="https://github.com/Frank-07/MyPortfolio/blob/main/CV/-CV-Franco%20Agnic.pdf" target="_blank" class="hover:text-cyan-400 transition font-semibold">CV</a>
-    <a href="https://frank-07.github.io/Cover-Letter/" target="_blank" class="hover:text-cyan-400 transition font-semibold">Cover Letter</a>
-    <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="hover:text-cyan-400 transition font-semibold">LinkedIn</a>
-    <a href="mailto:franco.agnic7@gmail.com" class="hover:text-cyan-400 transition font-semibold">Gmail</a>
-  </header>
-
   <!-- ✅ Scroll container expected by scripts -->
   <main class="snap-viewport">
 
@@ -419,6 +408,23 @@
     </section>
   
 
+      
+    <!-- Contact Me (final snap section) -->
+    <section id="contact-section" class="snap">
+      <div class="shade"></div>
+      <div class="content h-full p-6 flex flex-col items-center justify-center text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold title mb-6">Contact Me</h2>
+        <div class="w-full max-w-5xl mx-auto bg-black/60 rounded-2xl border border-cyan-400/30 shadow-xl">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 px-6 py-6">
+            <a href="https://github.com/Frank-07/MyPortfolio/blob/main/CV/-CV-Franco%20Agnic.pdf" target="_blank" class="btn !bg-slate-900">CV</a>
+            <a href="https://frank-07.github.io/Cover-Letter/" target="_blank" class="btn !bg-slate-900">Cover Letter</a>
+            <a href="https://www.linkedin.com/in/franco-agnic" target="_blank" class="btn !bg-slate-900">LinkedIn</a>
+            <a href="mailto:franco.agnic7@gmail.com" class="btn !bg-slate-900">Gmail</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Behavior scripts -->
@@ -581,39 +587,4 @@
       const src = urls[i];
       // smooth fade in when new image loads
       const temp = new Image();
-      temp.onload = () => { img.src = src; requestAnimationFrame(() => { img.style.opacity = '1'; }); };
-      temp.onerror = () => { img.src = src; img.style.opacity = '1'; };
-      temp.src = src;
-      counter.textContent = `${i+1} / ${total}`;
-      // Preload neighbors
-      preload(urls[(i+1)%total]);
-      preload(urls[(i-1+total)%total]);
-    }
-
-    prev.addEventListener('click', () => show(i-1));
-    next.addEventListener('click', () => show(i+1));
-
-    // Keyboard support
-    window.addEventListener('keydown', (e) => {
-      if (document.activeElement && ['INPUT','TEXTAREA','SELECT','BUTTON','A'].includes(document.activeElement.tagName)) return;
-      if (e.key === 'ArrowLeft') show(i-1);
-      if (e.key === 'ArrowRight') show(i+1);
-    });
-
-    // Simple swipe support on the image
-    let startX = null;
-    img.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
-    img.addEventListener('touchend', (e) => {
-      if (startX === null) return;
-      const dx = (e.changedTouches[0].clientX - startX);
-      if (Math.abs(dx) > 40) { if (dx < 0) show(i+1); else show(i-1); }
-      startX = null;
-    });
-
-    // Initial
-    img.style.transition = 'opacity .25s ease';
-    show(0);
-  })();
-</script>
-</body>
-</html>
+  
